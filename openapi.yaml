@@ -1,0 +1,236 @@
+openapi: 3.0.3
+info:
+  title: Swagger Petstore - OpenAPI 3.0
+  description: |-
+    This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about
+    Swagger at [https://swagger.io](https://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!
+    You can now help us improve the API whether it's by making changes to the definition itself or to the code.
+    That way, with time, we can improve the API in general, and expose some of the new features in OAS3.
+
+    _If you're looking for the Swagger 2.0/OAS 2.0 version of Petstore, then click [here](https://editor.swagger.io/?url=https://petstore.swagger.io/v2/swagger.yaml). Alternatively, you can load via the `Edit > Load Petstore OAS 2.0` menu option!_
+    
+    Some useful links:
+    - [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)
+    - [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://petstore3.swagger.io/api/v3
+paths:
+  /recipes:
+    get:
+      summary: Returns a list of recipes
+      description: Returns a list of all recipes currently available in the database.
+      operationId: getRecipes
+      responses:
+        '200':
+          $ref: '#/components/responses/RecipesCollectionResponseV1'          
+        '400':
+          description: Invalid ID supplied
+  /recipes/{recipeId}:
+    get:
+      summary: Returns one Recipe by Id
+      parameters:
+        - in: path
+          name: "recipeId"
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the recipe to get
+          
+      description: Return the matching recipe for the provided id
+      operationId: getRecipeById
+      responses:
+        '200':
+          $ref: '#/components/responses/RecipeByIdResponseV1' 
+  /createRecipe:
+    post:
+      summary: Creates new Recipe
+      description: Will create a new recipe to save in the database
+      operationId: postRecipe
+      responses:
+        '201':
+          description: The recipe has been saved.
+      requestBody:
+        $ref: '#/components/responses/RecipeByIdResponseV1'
+  /ingredients:
+    post:
+      summary: Creates new ingredient
+      description: Will create a new ingredient to save in the database
+      operationId: postIngredients
+      responses:
+        '200':
+          $ref: '#/components/responses/IngredientResponseV1'  
+  /groceries:
+    post:
+      summary: Confirms grocery purchase
+      description: Saves amount of bought items into inventory
+      operationId: postGroceries
+      responses:
+        '200':
+          $ref: '#/components/responses/GroceryCollectionResponseV1'
+components:
+  responses:
+    RecipesCollectionResponseV1:
+      description: Returns a list of recipes
+      content: 
+        application/json:
+          schema: 
+            $ref: '#/components/schemas/RecipesCollectionV1'
+          examples:
+            default:
+              $ref: '#/components/examples/RecipesCollectionV1'
+    RecipeByIdResponseV1:
+      description: Returns a list of recipes
+      content: 
+        application/json:
+          schema: 
+            description: TODO
+          examples:
+            default:
+              $ref: '#/components/examples/SingleRecipeV1'
+    GroceryCollectionResponseV1:
+      description: Posts List of bought Items
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GroceryCollectionV1'
+          examples:
+            default:
+              $ref: '#/components/examples/GroceryCollectionV1'
+    IngredientResponseV1:
+      description: Posts List of bought Items
+      content:
+        application/json:
+          schema:
+            description: TODO
+          examples:
+            default:
+              $ref: '#/components/examples/IngredientEntryV1'
+  schemas:
+    RecipesCollectionV1:
+      description: List of Recipes
+      type: array
+      items: 
+        $ref: '#/components/schemas/RecipeItemV1'
+    RecipeItemV1:
+      description: Recipe containing ingredients
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          description: Recipe
+    GroceryCollectionV1:
+      description: List of Groceries
+      type: array
+      items: 
+        $ref: '#/components/schemas/GroceryItemV1'
+    GroceryItemV1:
+      description: Recipe containing ingredients
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          
+          
+  examples: 
+    RecipesCollectionV1:
+      description: Shows All the information needed for the recipes
+      value: 
+        - id: "0001"
+          name: "Spaghetti"
+          manual: "Just do it!"
+          duration: "30"
+          ingredients: 
+            - id: "001"
+              name: "Noodles"
+              amount: "100"
+              unit: "grams"
+              category: "Grain products"
+              durability: "90"
+            - id: "002"
+              name: "Tomatoes"
+              amount: "3"
+              unit: "pieces"
+              category: "Vegetables"
+              durability: "5"
+          
+        - id: "0002"
+          name: "Pizza"
+          manual: "Just do it!"
+          duration: "60"
+          ingredients:
+            - id: "003"
+              name: "Dough"
+              amount: "200"
+              unit: "grams"
+              category: "Pastry"
+              durability: "7"
+            - id: "002"
+              name: "Tomatoes"
+              amount: "5"
+              unit: "pieces"
+              category: "Vegetables"
+              durability: "5"
+    SingleRecipeV1:
+      description: Shows selected Recipe by Id
+      value: 
+        id: "0001"
+        name: "Spaghetti"
+        manual: "Just do it!"
+        duration: "30"
+        ingredients: 
+          - id: "001"
+            name: "Noodles"
+            amount: "100"
+            unit: "grams"
+            category: "Grain products"
+            durability: "90"
+          - id: "002"
+            name: "Tomatoes"
+            amount: "3"
+            unit: "pieces"
+            category: "Vegetables"
+            durability: "5"
+    GroceryCollectionV1:
+      description: Sends information about the bought Items
+      value:
+        - id: "0002"
+          name: "Tomato"
+          amount: "5"
+          purchaseDate: "01-01-2024"
+        - id: "0001"
+          name: "Noodles"
+          amount: "100"
+          purchaseDate: "13-10-2024"
+    IngredientEntryV1:
+      description: Posts information about ingredient
+      value:
+        id: "0001"
+        name: "Tomato"
+        durability: "7"
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
