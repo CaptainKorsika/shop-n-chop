@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Swagger Petstore - OpenAPI 3.0
+  title: Shop-n-Chop - OpenAPI 3.0
   description: |-
     This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about
     Swagger at [https://swagger.io](https://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!
@@ -8,10 +8,7 @@ info:
     That way, with time, we can improve the API in general, and expose some of the new features in OAS3.
 
     _If you're looking for the Swagger 2.0/OAS 2.0 version of Petstore, then click [here](https://editor.swagger.io/?url=https://petstore.swagger.io/v2/swagger.yaml). Alternatively, you can load via the `Edit > Load Petstore OAS 2.0` menu option!_
-    
-    Some useful links:
-    - [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)
-    - [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
+
   termsOfService: http://swagger.io/terms/
   contact:
     email: apiteam@swagger.io
@@ -19,9 +16,6 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.11
-externalDocs:
-  description: Find out more about Swagger
-  url: http://swagger.io
 servers:
   - url: https://petstore3.swagger.io/api/v3
 paths:
@@ -34,7 +28,7 @@ paths:
         '200':
           $ref: '#/components/responses/RecipesCollectionResponseV1'          
         '400':
-          description: Invalid ID supplied
+          description: Could not fetch recipes
   /recipes/{recipeId}:
     get:
       summary: Returns one Recipe by Id
@@ -50,7 +44,9 @@ paths:
       operationId: getRecipeById
       responses:
         '200':
-          $ref: '#/components/responses/RecipeByIdResponseV1' 
+          $ref: '#/components/responses/RecipeByIdResponseV1'
+        '400':
+          description: Invalid ID supplied
   /createRecipe:
     post:
       summary: Creates new Recipe
@@ -68,7 +64,9 @@ paths:
       operationId: postIngredients
       responses:
         '200':
-          $ref: '#/components/responses/IngredientResponseV1'  
+          $ref: '#/components/responses/IngredientResponseV1'
+      requestBody:
+        $ref: '#/components/responses/RecipeByIdResponseV1'
   /groceries:
     post:
       summary: Confirms grocery purchase
@@ -77,6 +75,14 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/GroceryCollectionResponseV1'
+      requestBody:
+        $ref: '#/components/responses/RecipeByIdResponseV1'
+
+
+
+
+
+
 components:
   responses:
     RecipesCollectionResponseV1:
@@ -89,11 +95,11 @@ components:
             default:
               $ref: '#/components/examples/RecipesCollectionV1'
     RecipeByIdResponseV1:
-      description: Returns a list of recipes
+      description: Returns a single Recipe by id
       content: 
         application/json:
           schema: 
-            description: TODO
+            $ref: '#/components/schemas/RecipeItemV1'
           examples:
             default:
               $ref: '#/components/examples/SingleRecipeV1'
@@ -115,6 +121,10 @@ components:
           examples:
             default:
               $ref: '#/components/examples/IngredientEntryV1'
+
+
+
+
   schemas:
     RecipesCollectionV1:
       description: List of Recipes
@@ -124,12 +134,55 @@ components:
     RecipeItemV1:
       description: Recipe containing ingredients
       type: object
-      required:
-        - id
       properties:
         id:
-          type: integer
-          description: Recipe
+          type: string
+          description: Unique identifier for the recipe
+        name:
+          type: string
+          description: Name of the recipe
+        manual:
+          type: string
+          description: Instructions for preparing the recipe
+        duration:
+          type: string
+          description: Preparation time in minutes
+        ingredients:
+          type: array
+          description: List of ingredients needed for the recipe
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Unique identifier for the ingredient
+              name:
+                type: string
+                description: Name of the ingredient
+              amount:
+                type: string
+                description: Quantity of the ingredient
+              unit:
+                type: string
+                description: Unit of measurement for the ingredient
+              category:
+                type: string
+                description: Category to which the ingredient belongs
+              durability:
+                type: string
+                description: Shelf life of the ingredient in days
+            required:
+              - id
+              - name
+              - amount
+              - unit
+              - category
+      required:
+        - id
+        - name
+        - manual
+        - duration
+        - ingredients
     GroceryCollectionV1:
       description: List of Groceries
       type: array
@@ -143,7 +196,12 @@ components:
       properties:
         id:
           type: integer
-          
+
+
+
+
+
+
           
   examples: 
     RecipesCollectionV1:
