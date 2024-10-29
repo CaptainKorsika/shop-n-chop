@@ -1,21 +1,24 @@
 package de.shopnchop.provideRecipes.rest
 
-import de.shopnchop.provideRecipes.dto.IngredientDTO
 import de.shopnchop.provideRecipes.dto.RecipeDTO
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 
 @RestController
 @RequestMapping("/recipes")
-class ReceivedController {
+class RecipeCollectionController {
 
 
     @GetMapping
-    fun provideRecipes(): RecipeDTO {
+    fun provideRecipes(): List<RecipeDTO> {
 
-//        return """
+
+
+
+//        """
 //            {
 //        "id": "001",
 //        "name": "Noodles",
@@ -25,19 +28,12 @@ class ReceivedController {
 //        "durability": "90"
 //      }
 //        """.trimIndent()
-//    }
 
-        return RecipeDTO(
-            "001",
-            "Spaghetti",
-            "this is how tou cook awesome spaghetti",
-            "20 Minutes",
-            listOf(
-                IngredientDTO("001", "Noodles", "100", "grams", "Grain products", "90"),
-                IngredientDTO("002", "Tomatoes", "5", "pieces", "Vegetables", "7")
-            )
-        )
+      val dtoList = mutableListOf<RecipeDTO>()
+      return dtoList
     }
 
-
+    @PostMapping("newRecipe")
+    fun receiveRecipes() {
+    }
 }
