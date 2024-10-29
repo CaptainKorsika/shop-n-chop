@@ -1,0 +1,116 @@
+build:
+  maxIssues: 1
+
+config:
+  validation: true
+  # when writing own rules with new properties, exclude the property path e.g.: "my_rule_set,.*>.*>[my_property]"
+  excludes: ""
+
+processors:
+  active: true
+  #  exclude:
+  # - 'DetektProgressListener'
+  # - 'FunctionCountProcessor'
+  # - 'PropertyCountProcessor'
+  # - 'ClassCountProcessor'
+  # - 'PackageCountProcessor'
+  # - 'KtFileCountProcessor'
+
+console-reports:
+  active: true
+  exclude:
+    #  - 'ProjectStatisticsReport'
+    #  - 'ComplexityReport'
+    #  - 'NotificationReport'
+    #  - 'FindingsReport'
+    - 'FileBasedFindingsReport'
+  #  - 'BuildFailureReport'
+
+comments:
+  active: true
+
+complexity:
+  active: true
+  TooManyFunctions:
+    excludes: [ "**/test/**", "**/androidTest/**", "**/*.Test.kt", "**/*.Spec.kt", "**/*.Spek.kt" ]
+
+empty-blocks:
+  active: true
+
+exceptions:
+  active: true
+  ExceptionRaisedInUnexpectedLocation:
+    active: false
+  TooGenericExceptionCaught:
+    excludes: [ "**/test/**", "**/androidTest/**", "**/*.Test.kt", "**/*.Spec.kt", "**/*.Spek.kt" ]
+
+formatting:
+  active: true
+  android: false
+  autoCorrect: true
+  MaximumLineLength:
+    excludes: [ "**/test/**", "**/androidTest/**", "**/*.Test.kt", "**/*.Spec.kt", "**/*.Spek.kt" ]
+    maxLineLength: 132
+
+naming:
+  active: true
+  ClassNaming:
+    excludes: [ "**/test/**", "**/androidTest/**", "**/*.Test.kt", "**/*.Spec.kt", "**/*.Spek.kt" ]
+  ConstructorParameterNaming:
+    excludes: [ "**/test/**", "**/androidTest/**", "**/*.Test.kt", "**/*.Spec.kt", "**/*.Spek.kt" ]
+  EnumNaming:
+    excludes: [ "**/test/**", "**/androidTest/**", "**/*.Test.kt", "**/*.Spec.kt", "**/*.Spek.kt" ]
+  FunctionNaming:
+    excludes: [ "**/test/**", "**/androidTest/**", "**/*.Test.kt", "**/*.Spec.kt", "**/*.Spek.kt" ]
+  FunctionParameterNaming:
+    excludes: [ "**/test/**", "**/androidTest/**", "**/*.Test.kt", "**/*.Spec.kt", "**/*.Spek.kt" ]
+  ObjectPropertyNaming:
+    excludes: [ "**/test/**", "**/androidTest/**", "**/*.Test.kt", "**/*.Spec.kt", "**/*.Spek.kt" ]
+  PackageNaming:
+    excludes: [ "**/test/**", "**/androidTest/**", "**/*.Test.kt", "**/*.Spec.kt", "**/*.Spek.kt" ]
+  TopLevelPropertyNaming:
+    excludes: [ "**/test/**", "**/androidTest/**", "**/*.Test.kt", "**/*.Spec.kt", "**/*.Spek.kt" ]
+  VariableNaming:
+    excludes: [ "**/test/**", "**/androidTest/**", "**/*.Test.kt", "**/*.Spec.kt", "**/*.Spek.kt" ]
+
+performance:
+  active: true
+  ForEachOnRange:
+    excludes: [ "**/test/**", "**/androidTest/**", "**/*.Test.kt", "**/*.Spec.kt", "**/*.Spek.kt" ]
+  SpreadOperator:
+    excludes: [ "**/test/**", "**/androidTest/**", "**/*.Test.kt", "**/*.Spec.kt", "**/*.Spek.kt" ]
+
+potential-bugs:
+  active: true
+
+style:
+  active: true
+  ClassOrdering:
+    active: true
+  ExplicitItLambdaParameter:
+    active: false
+  FunctionOnlyReturningConstant:
+    excludedFunctions: [ 'describeContents' ]
+    ignoreAnnotated: [ "dagger.Provides" ]
+  MagicNumber:
+    excludes: [ "**/test/**", "**/androidTest/**", "**/*.Test.kt", "**/*.Spec.kt", "**/*.Spek.kt" ]
+  MaxLineLength:
+    excludes: [ "**/test/**", "**/androidTest/**", "**/*.Test.kt", "**/*.Spec.kt", "**/*.Spek.kt" ]
+    maxLineLength: 132
+  NoTabs:
+    active: true
+  RedundantVisibilityModifierRule:
+    active: true
+  TrailingWhitespace:
+    active: true
+  UnnecessaryAbstractClass:
+    ignoreAnnotated: [ "dagger.Module" ]
+  UnnecessaryParentheses:
+    active: true
+  UnusedImports:
+    active: true
+  UnusedPrivateMember:
+    allowedNames: "(_|ignored|expected|serialVersionUID)"
+  WildcardImport:
+    excludes: [ "**/test/**", "**/androidTest/**", "**/*.Test.kt", "**/*.Spec.kt", "**/*.Spek.kt" ]
+    excludeImports: [ "java.util.*", "kotlinx.android.synthetic.*" ]
