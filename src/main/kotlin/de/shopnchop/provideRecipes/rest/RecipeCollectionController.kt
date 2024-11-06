@@ -1,6 +1,6 @@
 package de.shopnchop.provideRecipes.rest
 
-import de.shopnchop.provideRecipes.dto.RecipeDTO
+import de.shopnchop.shared.dto.RecipeDTO
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping

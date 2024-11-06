@@ -1,4 +1,4 @@
-package de.shopnchop.provideRecipes.dto
+package de.shopnchop.shared.dto
 
 data class RecipeDTO(
     val id: String,
