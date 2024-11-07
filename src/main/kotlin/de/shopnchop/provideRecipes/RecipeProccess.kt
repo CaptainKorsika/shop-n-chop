@@ -8,7 +8,10 @@ class RecipeProcess(val recipeRepository: RecipeRepository, val recipeEntityConv
 
 
     fun fetchRecipes(): List<Recipe> {
-        return recipeRepository.findAll().map { recipeEntityConverter.entityToDomain(it) }
+        val recipeList = mutableListOf<Recipe>()
+        recipeRepository.findAll().map { recipeList.add(recipeEntityConverter.entityToDomain(it)) }.toList()
+
+        return recipeList
     }
 
 
@@ -23,8 +26,8 @@ class RecipeProcess(val recipeRepository: RecipeRepository, val recipeEntityConv
 
     fun saveRecipe(recipe: Recipe) {
 
-        val entity = recipeEntityConverter.domainToEntity(recipe)
-        recipeRepository.save(entity)
+        val recipeEntity = recipeEntityConverter.domainToEntity(recipe)
+        recipeRepository.save(recipeEntity)
 
     }
 }

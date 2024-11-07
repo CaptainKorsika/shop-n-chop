@@ -16,11 +16,13 @@ class SecurityConfig {
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     fun actuatorWebFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
-        return http.build()
+        return http.csrf{ it.disable() }.build()
     }
 
     @Bean
-    fun generalWebFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain = http.build()
+    fun generalWebFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
+        return http.csrf{ it.disable() }.build()
+    }
 
     @Bean
     fun userDetailsService(): MapReactiveUserDetailsService = MapReactiveUserDetailsService(mutableMapOf())
