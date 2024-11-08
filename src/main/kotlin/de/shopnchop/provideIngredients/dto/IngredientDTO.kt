@@ -1,4 +1,4 @@
-package de.shopnchop.shared.dto
+package de.shopnchop.provideIngredients.dto
 
 data class IngredientDTO(
     val name: String,

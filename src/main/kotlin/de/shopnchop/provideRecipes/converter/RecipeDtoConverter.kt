@@ -2,13 +2,13 @@ package de.shopnchop.provideRecipes.converter
 
 import de.shopnchop.provideIngredients.Ingredient
 import de.shopnchop.provideRecipes.Recipe
-import de.shopnchop.shared.converter.IngredientConverter
-import de.shopnchop.shared.dto.IngredientDTO
-import de.shopnchop.shared.dto.RecipeDTO
+import de.shopnchop.provideIngredients.converter.IngredientDtoConverter
+import de.shopnchop.provideIngredients.dto.IngredientDTO
+import de.shopnchop.provideRecipes.dto.RecipeDTO
 import org.springframework.stereotype.Component
 
 @Component
-class RecipeDtoConverter(val ingredientConverter: IngredientConverter) {
+class RecipeDtoConverter(val ingredientConverter: IngredientDtoConverter) {
     fun domainToDTO(recipe: Recipe): RecipeDTO {
 
         val ingredientsList = recipe.ingredients

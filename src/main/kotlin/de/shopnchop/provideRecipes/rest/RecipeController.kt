@@ -2,7 +2,7 @@ package de.shopnchop.provideRecipes.rest
 
 import de.shopnchop.provideRecipes.RecipeProcess
 import de.shopnchop.provideRecipes.converter.RecipeDtoConverter
-import de.shopnchop.shared.dto.RecipeDTO
+import de.shopnchop.provideRecipes.dto.RecipeDTO
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -21,7 +21,6 @@ class RecipeController(
         val recipes = recipeProcess.fetchRecipes().map { recipeDtoConverter.domainToDTO(it) }
         return recipes
     }
-
 
     @GetMapping("/recipes/{id}")
     fun provideRecipeByID(@PathVariable id: String): ResponseEntity<RecipeDTO> {
