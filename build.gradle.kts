@@ -87,6 +87,8 @@ dependencies {
     implementation("org.springframework:spring-aspects")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.google.guava:guava:33.3.1-jre")
+    testImplementation("io.mockk:mockk:1.13.13")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:5.9.1")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
