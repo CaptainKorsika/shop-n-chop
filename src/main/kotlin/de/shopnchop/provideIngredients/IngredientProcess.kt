@@ -17,7 +17,7 @@ class IngredientProcess(
     }
 
 
-    fun fetchInredientsByName(name: String): Ingredient? {
+    fun fetchIngredientByName(name: String): Ingredient? {
         val ingredientOrNull = ingredientRepository.findByName(name)
         if (ingredientOrNull.isEmpty()) {
             return null

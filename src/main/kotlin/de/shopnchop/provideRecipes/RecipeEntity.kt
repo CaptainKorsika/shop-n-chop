@@ -1,6 +1,5 @@
 package de.shopnchop.provideRecipes
 
-import de.shopnchop.provideIngredients.IngredientEntity
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
@@ -10,5 +9,5 @@ data class RecipeEntity(
     val name: String,
     val manual: String,
     val duration: String,
-    val ingredients: List<IngredientEntity>,
+    val ingredients: List<RecipeIngredientEntity>,
 )

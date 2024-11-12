@@ -1,6 +1,7 @@
 package de.shopnchop.provideGroceries
 
 import de.shopnchop.provideGroceries.converter.GroceriesEntityConverter
+import de.shopnchop.provideIngredients.Ingredient
 import de.shopnchop.provideRecipes.Recipe
 import org.springframework.stereotype.Component
 
@@ -20,6 +21,13 @@ class GroceriesProcess(val groceriesRepository: GroceriesRepository, val groceri
     fun deleteGroceries(groceries: List<Groceries>) {
         // TODO:
     }
+
+
+
+//    fun calculateNeededIngredients(recipes: List<Recipe>): List<Pair<Ingredient, Int>> {
+//
+//    }
+
 
 
 }

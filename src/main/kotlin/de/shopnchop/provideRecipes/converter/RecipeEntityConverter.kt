@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class RecipeEntityConverter(
-    private val ingredientEntityConverter: IngredientEntityConverter) {
+    private val ingredientEntityConverter: RecipeIngredientEntityConverter) {
 
     fun domainToEntity(recipe: Recipe): RecipeEntity {
 
