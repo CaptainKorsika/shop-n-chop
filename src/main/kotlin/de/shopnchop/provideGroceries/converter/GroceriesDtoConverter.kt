@@ -7,22 +7,18 @@ import org.springframework.stereotype.Component
 @Component
 class GroceriesDtoConverter {
     fun domainToDTO(groceries: Groceries): GroceriesDTO {
-
-
-
-
-        return GroceriesDTO()
+        return GroceriesDTO(
+            groceries.name,
+            groceries.amount,
+            groceries.expirationDate
+        )
     }
-
-
 
     fun dtoToDomain(dto: GroceriesDTO): Groceries {
-
-
-
-
-        return Groceries()
+        return Groceries(
+            dto.name,
+            dto.amount,
+            dto.expirationDate
+        )
     }
-
-
 }
