@@ -7,6 +7,7 @@ import de.shopnchop.provideRecipes.RecipeIngredientEntity
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -55,6 +56,8 @@ class RecipeEntityConverterTest {
             )
         )
         recipe.shouldBe(expectedRecipe)
+        verify { ingredientEntityConverterMock.entityToDomain(RecipeIngredientEntity("Tomaten", 5, "Pieces")) }
+        verify { ingredientEntityConverterMock.entityToDomain(RecipeIngredientEntity("Brühe", 1, "Liter")) }
     }
 
 
@@ -93,6 +96,8 @@ class RecipeEntityConverterTest {
             )
         )
         recipeEntity.shouldBe(expectedRecipeEntity)
+        verify { ingredientEntityConverterMock.domainToEntity(RecipeIngredient("Tomaten", 5, "Pieces")) }
+        verify { ingredientEntityConverterMock.domainToEntity(RecipeIngredient("Brühe", 1, "Liter")) }
     }
 
 

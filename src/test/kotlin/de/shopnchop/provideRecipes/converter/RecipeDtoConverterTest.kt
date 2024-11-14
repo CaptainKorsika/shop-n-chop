@@ -7,17 +7,18 @@ import de.shopnchop.provideRecipes.dto.RecipeDTO
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class RecipeDtoConverterTest{
-    private val ingredientDtoConverter: RecipeIngredientDtoConverter = mockk()
+    private val ingredientDtoConverterMock: RecipeIngredientDtoConverter = mockk()
     private lateinit var recipeDtoConverter: RecipeDtoConverter
 
 
     @BeforeEach
     fun setUp() {
-            recipeDtoConverter = RecipeDtoConverter(ingredientDtoConverter)
+            recipeDtoConverter = RecipeDtoConverter(ingredientDtoConverterMock)
     }
 
 
@@ -35,7 +36,7 @@ class RecipeDtoConverterTest{
             )
         )
 
-        every { ingredientDtoConverter.dtoToDomain(any()) } returnsMany listOf(
+        every { ingredientDtoConverterMock.dtoToDomain(any()) } returnsMany listOf(
             RecipeIngredient("Tomaten", 5, "Pieces"),
             RecipeIngredient("Brühe", 1, "Liter")
         )
@@ -56,6 +57,8 @@ class RecipeDtoConverterTest{
             )
         )
         recipe.shouldBe(expectedRecipe)
+        verify { ingredientDtoConverterMock.dtoToDomain(RecipeIngredientDTO("Tomaten", 5, "Pieces")) }
+        verify { ingredientDtoConverterMock.dtoToDomain(RecipeIngredientDTO("Brühe", 1, "Liter")) }
     }
 
 
@@ -73,7 +76,7 @@ class RecipeDtoConverterTest{
             )
         )
 
-        every { ingredientDtoConverter.domainToDto(any()) } returnsMany listOf(
+        every { ingredientDtoConverterMock.domainToDto(any()) } returnsMany listOf(
             RecipeIngredientDTO("Tomaten", 5, "Pieces"),
             RecipeIngredientDTO("Brühe", 1, "Liter")
         )
@@ -94,6 +97,8 @@ class RecipeDtoConverterTest{
             )
         )
         recipeDto.shouldBe(expectedRecipe)
+        verify { ingredientDtoConverterMock.domainToDto(RecipeIngredient("Tomaten", 5, "Pieces")) }
+        verify { ingredientDtoConverterMock.domainToDto(RecipeIngredient("Brühe", 1, "Liter")) }
     }
 
 
