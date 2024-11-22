@@ -1,8 +1,6 @@
 package de.shopnchop.provideGroceries
 
 import de.shopnchop.provideGroceries.converter.GroceriesEntityConverter
-import de.shopnchop.provideIngredients.Ingredient
-import de.shopnchop.provideRecipes.Recipe
 import org.springframework.stereotype.Component
 
 @Component
@@ -15,11 +13,17 @@ class GroceriesProcess(val groceriesRepository: GroceriesRepository, val groceri
     }
 
     fun saveGroceries(groceries: List<Groceries>) {
-        groceries.map { groceriesRepository.save(groceriesEntityConverter.domainToEntity(it)) }
+        groceries.forEach { groceriesRepository.save(groceriesEntityConverter.domainToEntity(it)) }
     }
 
     fun deleteGroceries(groceries: List<Groceries>) {
-        // TODO:
+        val availableGroceries = fetchGroceries()
+
+        groceries.forEach { usedItem ->
+            availableGroceries.filter { it.name == usedItem.name }
+            
+        }
+
     }
 
 
