@@ -3,22 +3,36 @@ package de.shopnchop.provideGroceries.converter
 import de.shopnchop.provideGroceries.Groceries
 import de.shopnchop.provideGroceries.GroceriesEntity
 import org.springframework.stereotype.Component
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Component
 class GroceriesEntityConverter {
-    fun domainToEntity(groceries: Groceries): GroceriesEntity {
+    fun domainToEntity(groceries: Groceries, id: String? = null): GroceriesEntity {
+        val formatter = SimpleDateFormat("dd.MM.yyyy")
+        val formattedDate = formatter.format(groceries.expirationDate)
+
+        var amountString = groceries.amount.toString()
+        if (amountString.endsWith(".0")) {
+            amountString = amountString.substring(0, amountString.length - 2)
+        }
+
         return GroceriesEntity(
+            id,
             groceries.name,
-            groceries.amount,
-            groceries.expirationDate
+            amountString,
+            formattedDate
         )
     }
 
     fun entityToDomain(entity: GroceriesEntity): Groceries {
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val date: Date = dateFormat.parse(entity.expirationDate)
+
         return Groceries(
             entity.name,
-            entity.amount,
-            entity.expirationDate
+            entity.amount.toDouble(),
+            date
         )
     }
 }
