@@ -3,6 +3,7 @@ package de.shopnchop.provideGroceries
 import de.shopnchop.provideGroceries.converter.GroceriesEntityConverter
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.RequestBody
+import java.text.SimpleDateFormat
 import java.util.*
 
 @Component
@@ -53,11 +54,19 @@ class GroceriesProcess(val groceriesRepository: GroceriesRepository, val groceri
         val itemsToDelete: MutableList<GroceriesEntity> = mutableListOf()
         val itemsToUpdate: MutableList<GroceriesEntity> = mutableListOf()
 
+        val formatter = SimpleDateFormat("dd.MM.yyyy")
+        val formattedDate = formatter.format(Date())
+
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val date = dateFormat.parse(formattedDate)
+
+
+
         usedGroceries.forEach { usedItem ->
             var neededAmount = usedItem.amount
             val matchingItems = this.fetchGroceries()
                 .filter { it.name == usedItem.name }
-                .filter { it.expirationDate.after(Date()) }
+                .filter { it.expirationDate >= date }
                 .sortedBy { it.expirationDate }
 
             if (matchingItems.isEmpty()) {
