@@ -1,7 +1,7 @@
 package de.shopnchop.provideRecipes.converter
 
 import de.shopnchop.provideRecipes.Recipe
-import de.shopnchop.provideIngredients.dto.RecipeIngredientDTO
+import de.shopnchop.provideRecipes.dto.RecipeIngredientDTO
 import de.shopnchop.provideRecipes.RecipeIngredient
 import de.shopnchop.provideRecipes.dto.RecipeDTO
 import org.springframework.stereotype.Component

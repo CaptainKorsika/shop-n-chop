@@ -1,6 +1,8 @@
 package de.shopnchop.provideGroceries
 
 import de.shopnchop.provideGroceries.converter.GroceriesEntityConverter
+import de.shopnchop.provideRecipes.Recipe
+import de.shopnchop.provideRecipes.RecipeIngredient
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.RequestBody
 import java.text.SimpleDateFormat
@@ -66,7 +68,7 @@ class GroceriesProcess(val groceriesRepository: GroceriesRepository, val groceri
             var neededAmount = usedItem.amount
             val matchingItems = this.fetchGroceries()
                 .filter { it.name == usedItem.name }
-                .filter { it.expirationDate >= date }
+                .filter { it.expirationDate!! >= date }
                 .sortedBy { it.expirationDate }
 
             if (matchingItems.isEmpty()) {
@@ -111,8 +113,59 @@ class GroceriesProcess(val groceriesRepository: GroceriesRepository, val groceri
 
 
 
-//    fun calculateNeededIngredients(recipes: List<Recipe>): List<Pair<Ingredient, Int>> {
-//
-//    }
+    fun calculateAllIngredients(recipes: List<Recipe>): List<Groceries> {
+        val ingredients = mutableListOf<RecipeIngredient>()
+        recipes.map { recipe ->
+            recipe.ingredients.forEach {
+                if (ingredients.map { ingredient -> ingredient.name }.contains(it.name)) {
+                    val amount = it.amount
+                    ingredients.filter { ingredient -> ingredient.name == it.name }[0].amount += amount
+                } else {
+                    ingredients.add(it)
+                }
+            }
+        }
+        val neededGroceries = calculateFinalGroceries(ingredients)
+
+
+        val availableGroceries = this.fetchGroceries()
+        val missingGroceries = mutableListOf<Groceries>()
+
+
+        val formatter = SimpleDateFormat("dd.MM.yyyy")
+        val formattedDate = formatter.format(Date())
+
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val date = dateFormat.parse(formattedDate)
+
+
+        neededGroceries.forEach { groceries ->
+            val matchingAmount = availableGroceries
+                .filter { it.name == groceries.name }
+                .filter { it.expirationDate!! >= date }
+            if (matchingAmount.isNotEmpty()) {
+                val availableAmount = matchingAmount[0].amount
+                missingGroceries.add(Groceries(
+                    groceries.name,
+                    groceries.amount - availableAmount,
+                    null
+                ))
+            }
+            else {
+                missingGroceries.add(groceries)
+            }
+        }
+
+        return missingGroceries
+
+    }
+
+    fun calculateFinalGroceries(ingredients: List<RecipeIngredient>): List<Groceries> {
+        return ingredients.map { Groceries(
+            it.name,
+            it.amount,
+            null
+        ) }
+    }
 
 }

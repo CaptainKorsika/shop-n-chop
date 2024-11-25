@@ -1,7 +1,7 @@
-package de.shopnchop.provideIngredients.dto
+package de.shopnchop.provideRecipes.dto
 
 data class RecipeIngredientDTO(
     val name: String,
-    val amount: Int,
+    val amount: String,
     val unit: String,
 )

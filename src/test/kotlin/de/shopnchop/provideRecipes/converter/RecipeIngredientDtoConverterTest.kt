@@ -1,6 +1,6 @@
 package de.shopnchop.provideRecipes.converter
 
-import de.shopnchop.provideIngredients.dto.RecipeIngredientDTO
+import de.shopnchop.provideRecipes.dto.RecipeIngredientDTO
 import de.shopnchop.provideRecipes.RecipeIngredient
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
@@ -19,7 +19,7 @@ class RecipeIngredientDtoConverterTest {
         // given
         val dto = RecipeIngredientDTO(
             "Apple",
-            1,
+            "1",
             "kg"
         )
 
@@ -30,7 +30,7 @@ class RecipeIngredientDtoConverterTest {
         // then
         val expectedRecipeIngredient = RecipeIngredient(
             "Apple",
-            1,
+            1.0,
             "kg"
         )
 
@@ -43,7 +43,7 @@ class RecipeIngredientDtoConverterTest {
         // given
         val recipeIngredient = RecipeIngredient(
             "Milk",
-            200,
+            200.0,
             "ml"
         )
 
@@ -54,16 +54,10 @@ class RecipeIngredientDtoConverterTest {
         // then
         val expectedRecipeIngredientDto = RecipeIngredientDTO(
             "Milk",
-            200,
+            "200",
             "ml"
         )
 
         recipeIngredientDto.shouldBe(expectedRecipeIngredientDto)
-
     }
-
-
-
-
-
 }

@@ -9,14 +9,17 @@ import java.util.*
 @Component
 class GroceriesDtoConverter {
     fun domainToDTO(groceries: Groceries): GroceriesDTO {
-        val formatter = SimpleDateFormat("dd.MM.yyyy")
-        val formattedDate = formatter.format(groceries.expirationDate)
+        var formattedDate: String? = null
+
+        if (groceries.expirationDate != null) {
+            val formatter = SimpleDateFormat("dd.MM.yyyy")
+            formattedDate = formatter.format(groceries.expirationDate)
+        }
 
         var amountString = groceries.amount.toString()
         if (amountString.endsWith(".0")) {
             amountString = amountString.substring(0, amountString.length - 2)
         }
-
 
         return GroceriesDTO(
             groceries.name,
@@ -26,9 +29,12 @@ class GroceriesDtoConverter {
     }
 
     fun dtoToDomain(dto: GroceriesDTO): Groceries {
-        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-        val date: Date = dateFormat.parse(dto.expirationDate)
+        var date: Date? = null
 
+        if (dto.expirationDate != null) {
+            val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+            date = dateFormat.parse(dto.expirationDate)
+        }
 
         return Groceries(
             dto.name,

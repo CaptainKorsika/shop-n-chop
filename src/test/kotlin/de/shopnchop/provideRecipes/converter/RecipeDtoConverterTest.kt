@@ -1,6 +1,6 @@
 package de.shopnchop.provideRecipes.converter
 
-import de.shopnchop.provideIngredients.dto.RecipeIngredientDTO
+import de.shopnchop.provideRecipes.dto.RecipeIngredientDTO
 import de.shopnchop.provideRecipes.Recipe
 import de.shopnchop.provideRecipes.RecipeIngredient
 import de.shopnchop.provideRecipes.dto.RecipeDTO
@@ -31,14 +31,14 @@ class RecipeDtoConverterTest{
             "cooking is fun",
             "30 Minutes",
             listOf(
-                RecipeIngredientDTO("Tomaten", 5, "Pieces"),
-                RecipeIngredientDTO("Brühe", 1, "Liter")
+                RecipeIngredientDTO("Tomaten", "5", "Pieces"),
+                RecipeIngredientDTO("Brühe", "1", "Liter")
             )
         )
 
         every { ingredientDtoConverterMock.dtoToDomain(any()) } returnsMany listOf(
-            RecipeIngredient("Tomaten", 5, "Pieces"),
-            RecipeIngredient("Brühe", 1, "Liter")
+            RecipeIngredient("Tomaten", 5.0, "Pieces"),
+            RecipeIngredient("Brühe", 1.0, "Liter")
         )
 
 
@@ -52,13 +52,13 @@ class RecipeDtoConverterTest{
             "cooking is fun",
             "30 Minutes",
             listOf(
-                RecipeIngredient("Tomaten", 5, "Pieces"),
-                RecipeIngredient("Brühe", 1, "Liter")
+                RecipeIngredient("Tomaten", 5.0, "Pieces"),
+                RecipeIngredient("Brühe", 1.0, "Liter")
             )
         )
         recipe.shouldBe(expectedRecipe)
-        verify { ingredientDtoConverterMock.dtoToDomain(RecipeIngredientDTO("Tomaten", 5, "Pieces")) }
-        verify { ingredientDtoConverterMock.dtoToDomain(RecipeIngredientDTO("Brühe", 1, "Liter")) }
+        verify { ingredientDtoConverterMock.dtoToDomain(RecipeIngredientDTO("Tomaten", "5", "Pieces")) }
+        verify { ingredientDtoConverterMock.dtoToDomain(RecipeIngredientDTO("Brühe", "1", "Liter")) }
     }
 
 
@@ -71,16 +71,15 @@ class RecipeDtoConverterTest{
             "cooking is fun",
             "30 Minutes",
             listOf(
-                RecipeIngredient("Tomaten", 5, "Pieces"),
-                RecipeIngredient("Brühe", 1, "Liter")
+                RecipeIngredient("Tomaten", 5.0, "Pieces"),
+                RecipeIngredient("Brühe", 1.0, "Liter")
             )
         )
 
         every { ingredientDtoConverterMock.domainToDto(any()) } returnsMany listOf(
-            RecipeIngredientDTO("Tomaten", 5, "Pieces"),
-            RecipeIngredientDTO("Brühe", 1, "Liter")
+            RecipeIngredientDTO("Tomaten", "5", "Pieces"),
+            RecipeIngredientDTO("Brühe", "1", "Liter")
         )
-
 
         // when
         val recipeDto = recipeDtoConverter.domainToDTO(recipe)
@@ -92,14 +91,12 @@ class RecipeDtoConverterTest{
             "cooking is fun",
             "30 Minutes",
             listOf(
-                RecipeIngredientDTO("Tomaten", 5, "Pieces"),
-                RecipeIngredientDTO("Brühe", 1, "Liter")
+                RecipeIngredientDTO("Tomaten", "5", "Pieces"),
+                RecipeIngredientDTO("Brühe", "1", "Liter")
             )
         )
         recipeDto.shouldBe(expectedRecipe)
-        verify { ingredientDtoConverterMock.domainToDto(RecipeIngredient("Tomaten", 5, "Pieces")) }
-        verify { ingredientDtoConverterMock.domainToDto(RecipeIngredient("Brühe", 1, "Liter")) }
+        verify { ingredientDtoConverterMock.domainToDto(RecipeIngredient("Tomaten", 5.0, "Pieces")) }
+        verify { ingredientDtoConverterMock.domainToDto(RecipeIngredient("Brühe", 1.0, "Liter")) }
     }
-
-
 }

@@ -2,6 +2,6 @@ package de.shopnchop.provideRecipes
 
 data class RecipeIngredient(
     val name: String,
-    val amount: Int,
+    var amount: Double,
     val unit: String,
 )
