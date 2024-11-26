@@ -53,22 +53,13 @@ class GroceriesProcess(val groceriesRepository: GroceriesRepository, val groceri
     }
 
     fun useGroceries(@RequestBody usedGroceries: List<Groceries>) {
-        val itemsToDelete: MutableList<GroceriesEntity> = mutableListOf()
-        val itemsToUpdate: MutableList<GroceriesEntity> = mutableListOf()
-
-        val formatter = SimpleDateFormat("dd.MM.yyyy")
-        val formattedDate = formatter.format(Date())
-
-        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-        val date = dateFormat.parse(formattedDate)
-
-
+        val dateToday = this.formatDate(Date())
 
         usedGroceries.forEach { usedItem ->
             var neededAmount = usedItem.amount
             val matchingItems = this.fetchGroceries()
                 .filter { it.name == usedItem.name }
-                .filter { it.expirationDate!! >= date }
+                .filter { it.expirationDate!! >= dateToday }
                 .sortedBy { it.expirationDate }
 
             if (matchingItems.isEmpty()) {
@@ -93,7 +84,7 @@ class GroceriesProcess(val groceriesRepository: GroceriesRepository, val groceri
                     neededAmount -= foundItem.amount
 
                     updatedGroceriesEntity = groceriesEntityConverter.domainToEntity(foundItem, itemId)
-                    itemsToDelete.add(updatedGroceriesEntity)
+                    groceriesRepository.delete(updatedGroceriesEntity)
                 } else {
                     val updatedGrocery = Groceries(
                         foundItem.name,
@@ -101,23 +92,21 @@ class GroceriesProcess(val groceriesRepository: GroceriesRepository, val groceri
                         foundItem.expirationDate
                     )
                     updatedGroceriesEntity = groceriesEntityConverter.domainToEntity(updatedGrocery, itemId)
-                    itemsToUpdate.add(updatedGroceriesEntity)
+                    groceriesRepository.save(updatedGroceriesEntity)
                     neededAmount = 0.0
                 }
                 currentIndex++
             }
         }
-        itemsToDelete.forEach { groceriesRepository.delete(it) }
-        itemsToUpdate.forEach { groceriesRepository.save(it) }
     }
-
-
 
     fun calculateAllIngredients(recipes: List<Recipe>): List<Groceries> {
         val ingredients = mutableListOf<RecipeIngredient>()
-        recipes.map { recipe ->
+
+
+        recipes.forEach { recipe ->
             recipe.ingredients.forEach {
-                if (ingredients.map { ingredient -> ingredient.name }.contains(it.name)) {
+                if (ingredients.map { ingredient -> ingredient.name }.contains( it.name)) {
                     val amount = it.amount
                     ingredients.filter { ingredient -> ingredient.name == it.name }[0].amount += amount
                 } else {
@@ -125,26 +114,20 @@ class GroceriesProcess(val groceriesRepository: GroceriesRepository, val groceri
                 }
             }
         }
-        val neededGroceries = calculateFinalGroceries(ingredients)
-
-
+        val neededGroceries = this.convertToGroceries(ingredients)
         val availableGroceries = this.fetchGroceries()
         val missingGroceries = mutableListOf<Groceries>()
 
-
-        val formatter = SimpleDateFormat("dd.MM.yyyy")
-        val formattedDate = formatter.format(Date())
-
-        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-        val date = dateFormat.parse(formattedDate)
-
+        val dateToday = this.formatDate(Date())
 
         neededGroceries.forEach { groceries ->
             val matchingAmount = availableGroceries
                 .filter { it.name == groceries.name }
-                .filter { it.expirationDate!! >= date }
+                .filter { it.expirationDate!! >= dateToday }
             if (matchingAmount.isNotEmpty()) {
-                val availableAmount = matchingAmount[0].amount
+                val availableAmount = matchingAmount
+                    .sumOf { it.amount }
+                println(availableAmount)
                 missingGroceries.add(Groceries(
                     groceries.name,
                     groceries.amount - availableAmount,
@@ -155,12 +138,10 @@ class GroceriesProcess(val groceriesRepository: GroceriesRepository, val groceri
                 missingGroceries.add(groceries)
             }
         }
-
         return missingGroceries
-
     }
 
-    fun calculateFinalGroceries(ingredients: List<RecipeIngredient>): List<Groceries> {
+    fun convertToGroceries(ingredients: List<RecipeIngredient>): List<Groceries> {
         return ingredients.map { Groceries(
             it.name,
             it.amount,
@@ -168,4 +149,11 @@ class GroceriesProcess(val groceriesRepository: GroceriesRepository, val groceri
         ) }
     }
 
+    private fun formatDate(date: Date): Date {
+        val formatter = SimpleDateFormat("dd.MM.yyyy")
+        val formattedDate = formatter.format(Date())
+
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        return dateFormat.parse(formattedDate)
+    }
 }

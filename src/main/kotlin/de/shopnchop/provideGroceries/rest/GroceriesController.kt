@@ -43,6 +43,14 @@ class GroceriesController(
         val usedGroceries = dtoList.map { groceriesDtoConverter.dtoToDomain(it) }
         groceriesProcess.useGroceries(usedGroceries)
     }
+
+    // TODO: implement new API endpoints
+    // provideExpiredGroceries
+    // changeGroceriesExpiration
+    // provideNonExpiredGroceries
+    // deleteExpiredGroceries
+    // deleteSingleGrocery
+
 }
 
 
