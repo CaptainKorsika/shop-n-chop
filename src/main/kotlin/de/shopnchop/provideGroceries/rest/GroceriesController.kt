@@ -27,8 +27,6 @@ class GroceriesController(
         val selectedRecipes = selectedRecipeDtos.map { recipeDtoConverter.dtoToDomain(it) }
         val neededGroceries = groceriesProcess.calculateAllIngredients(selectedRecipes).map { groceriesDtoConverter.domainToDTO(it) }
         // TODO: get and subtract availableGroceries
-
-
         return neededGroceries
     }
 
@@ -44,14 +42,24 @@ class GroceriesController(
         groceriesProcess.useGroceries(usedGroceries)
     }
 
-    // TODO: implement new API endpoints
-    // provideExpiredGroceries
-    // changeGroceriesExpiration
-    // provideNonExpiredGroceries
-    // deleteExpiredGroceries
-    // deleteSingleGrocery
+    @GetMapping("/fresh")
+    fun provideFreshGroceries(): List<GroceriesDTO> {
+        return groceriesProcess.fetchFreshGroceries().map { groceriesDtoConverter.domainToDTO(it) }
+    }
+
+    @GetMapping("/expired")
+    fun provideExpiredGroceries(): List<GroceriesDTO> {
+        return groceriesProcess.fetchExpiredGroceries().map { groceriesDtoConverter.domainToDTO(it) }
+    }
+
+    @PostMapping("/deleteGroceries")
+    fun deleteGroceries(@RequestBody dtoList: List<GroceriesDTO>) {
+        groceriesProcess.deleteGroceries(dtoList.map { groceriesDtoConverter.dtoToDomain(it) })
+    }
+
+    @PostMapping("/change")
+    fun changeGroceriesExpiration(@RequestBody dto: GroceriesChangeDTO) {
+        groceriesProcess.changeGroceryDate(groceriesDtoConverter.dtoToDomain(dto))
+    }
 
 }
-
-
-//}

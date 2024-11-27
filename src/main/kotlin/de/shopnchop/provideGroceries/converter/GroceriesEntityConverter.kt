@@ -8,7 +8,7 @@ import java.util.*
 
 @Component
 class GroceriesEntityConverter {
-    fun domainToEntity(groceries: Groceries, id: String? = null): GroceriesEntity {
+    fun domainToEntity(groceries: Groceries): GroceriesEntity {
         val formatter = SimpleDateFormat("dd.MM.yyyy")
         val formattedDate = formatter.format(groceries.expirationDate)
 
@@ -18,7 +18,7 @@ class GroceriesEntityConverter {
         }
 
         return GroceriesEntity(
-            id,
+            groceries.id,
             groceries.name,
             amountString,
             formattedDate
@@ -30,6 +30,7 @@ class GroceriesEntityConverter {
         val date: Date = dateFormat.parse(entity.expirationDate)
 
         return Groceries(
+            entity.id,
             entity.name,
             entity.amount.toDouble(),
             date

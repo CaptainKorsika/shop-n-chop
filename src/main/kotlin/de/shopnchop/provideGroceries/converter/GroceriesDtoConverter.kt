@@ -22,6 +22,7 @@ class GroceriesDtoConverter {
         }
 
         return GroceriesDTO(
+            groceries.id,
             groceries.name,
             amountString,
             formattedDate,
@@ -37,6 +38,7 @@ class GroceriesDtoConverter {
         }
 
         return Groceries(
+            dto.id,
             dto.name,
             dto.amount.toDouble(),
             date

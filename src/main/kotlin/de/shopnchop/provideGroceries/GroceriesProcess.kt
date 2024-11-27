@@ -15,7 +15,6 @@ class GroceriesProcess(val groceriesRepository: GroceriesRepository, val groceri
             .findAll()
             .map { groceriesEntityConverter.entityToDomain(it) }
             .toList()
-
     }
 
     fun fetchIdByNameAndDate(name: String, date: String): String? {
@@ -26,9 +25,7 @@ class GroceriesProcess(val groceriesRepository: GroceriesRepository, val groceri
         if (foundEntities.isEmpty()) {
             return null
         }
-
         return foundEntities.first().id
-
     }
 
     fun saveGroceries(groceries: List<Groceries>) {
@@ -83,15 +80,16 @@ class GroceriesProcess(val groceriesRepository: GroceriesRepository, val groceri
                 if (foundItem.amount <= neededAmount) {
                     neededAmount -= foundItem.amount
 
-                    updatedGroceriesEntity = groceriesEntityConverter.domainToEntity(foundItem, itemId)
+                    updatedGroceriesEntity = groceriesEntityConverter.domainToEntity(foundItem)
                     groceriesRepository.delete(updatedGroceriesEntity)
                 } else {
                     val updatedGrocery = Groceries(
+                        foundItem.id,
                         foundItem.name,
                         foundItem.amount - neededAmount,
                         foundItem.expirationDate
                     )
-                    updatedGroceriesEntity = groceriesEntityConverter.domainToEntity(updatedGrocery, itemId)
+                    updatedGroceriesEntity = groceriesEntityConverter.domainToEntity(updatedGrocery)
                     groceriesRepository.save(updatedGroceriesEntity)
                     neededAmount = 0.0
                 }
@@ -129,6 +127,7 @@ class GroceriesProcess(val groceriesRepository: GroceriesRepository, val groceri
                     .sumOf { it.amount }
                 println(availableAmount)
                 missingGroceries.add(Groceries(
+                    null,
                     groceries.name,
                     groceries.amount - availableAmount,
                     null
@@ -143,10 +142,45 @@ class GroceriesProcess(val groceriesRepository: GroceriesRepository, val groceri
 
     fun convertToGroceries(ingredients: List<RecipeIngredient>): List<Groceries> {
         return ingredients.map { Groceries(
+            null,
             it.name,
             it.amount,
             null
         ) }
+    }
+
+    fun fetchExpiredGroceries(): List<Groceries> {
+        val dateToday = this.formatDate(Date())
+        return this.fetchGroceries()
+            .filter { item -> item.expirationDate != null }
+            .filter { it.expirationDate!! < dateToday }
+    }
+
+    fun fetchFreshGroceries(): List<Groceries> {
+        val dateToday = this.formatDate(Date())
+        return this.fetchGroceries()
+            .filter { item -> item.expirationDate != null }
+            .filter { it.expirationDate!! >= dateToday }
+    }
+
+    fun deleteGroceries(groceryList: List<Groceries>) {
+        groceryList.forEach {
+            val groceryEntity = groceriesEntityConverter.domainToEntity(it)
+            val id = this.fetchIdByNameAndDate(groceryEntity.name, groceryEntity.expirationDate)
+            groceriesRepository.deleteById(id!!)
+        }
+    }
+
+    fun changeGroceryDate(groceryItem : Groceries) {
+        val groceryEntity = groceriesEntityConverter.domainToEntity(groceryItem)
+        val id = this.fetchIdByNameAndDate(groceryEntity.name, groceryEntity.expirationDate)
+        val finalGroceryEntity = GroceriesEntity(
+            id,
+            groceryEntity.name,
+            groceryEntity.amount,
+            groceryEntity.expirationDate
+        )
+        groceriesRepository.save(finalGroceryEntity)
     }
 
     private fun formatDate(date: Date): Date {
