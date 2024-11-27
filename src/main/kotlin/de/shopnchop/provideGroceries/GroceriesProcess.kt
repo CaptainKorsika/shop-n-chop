@@ -24,33 +24,34 @@ class GroceriesProcess(
     }
 
     fun saveGroceries(groceries: List<Groceries>) {
-        groceries.forEach {
-
-            if (it.currentExpirationDate == null) {
-                it.currentExpirationDate = it.purchaseDate
-            }
-
-            val entity = groceriesEntityConverter.domainToEntity(it)
+        groceries.forEach { grocery ->
+            var calculatedExpirationDate = formatDate(Date())
+            // val entity = groceriesEntityConverter.domainToEntity(grocery)
 
             // TODO: Implement logic when ingredient not in DB
-            val ingredient = ingredientProcess.fetchIngredientByName(entity.name)
-            var calculatedExpirationDate = entity.purchaseDate
-
-
+            val ingredient = ingredientProcess.fetchIngredientByName(grocery.name)
             if (ingredient != null) {
                 val ingredientDurability = ingredient.durability
-                calculatedExpirationDate = calcExpirationDate(entity.purchaseDate, ingredientDurability)
-
+                calculatedExpirationDate = calcExpirationDate(
+                    formatDateToString(grocery.purchaseDate!!),
+                    ingredientDurability)
             }
 
-            val matchingEntry = this.fetchByNameAndDate(entity.name, calculatedExpirationDate)
+            val entity = groceriesEntityConverter.domainToEntity(
+                Groceries(
+                    grocery.id,
+                    grocery.name,
+                    grocery.amount,
+                    calculatedExpirationDate
+                ))
+
+            val matchingEntry = this.fetchByNameAndDate(grocery.name, entity.expirationDate)
             if (matchingEntry == null) {
                 groceriesRepository.save(GroceriesEntity(
                     null,
                     entity.name,
                     entity.amount,
-                    entity.purchaseDate,
-                    calculatedExpirationDate
+                    entity.expirationDate
                 ))
             } else {
                 val newAmount = calcNewGroceriesAmount(entity.amount, matchingEntry.amount)
@@ -59,8 +60,7 @@ class GroceriesProcess(
                         matchingEntry.id,
                         entity.name,
                         newAmount,
-                        entity.purchaseDate,
-                        calculatedExpirationDate
+                        entity.expirationDate
                     )
                 )
             }
@@ -184,14 +184,10 @@ class GroceriesProcess(
             groceryEntity.id,
             groceryEntity.name,
             groceryEntity.amount,
-            groceryEntity.purchaseDate,
             formatDateToString(groceryItem.newExpirationDate!!)
         )
         groceriesRepository.save(updatedGroceryEntity)
     }
-
-
-
 
     private fun fetchByNameAndDate(name: String, date: String): GroceriesEntity? {
         val foundEntities = groceriesRepository
@@ -230,9 +226,11 @@ class GroceriesProcess(
         ) }
     }
 
-    private fun calcExpirationDate(purchaseDate: String, days: Int): String {
+    private fun calcExpirationDate(purchaseDate: String, days: Int): Date {
         val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
         val formattedDate = LocalDate.parse(purchaseDate, formatter)
-        return formattedDate.plusDays(days.toLong()).format(formatter)
+
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        return dateFormat.parse(formattedDate.plusDays(days.toLong()).format(formatter))
     }
 }

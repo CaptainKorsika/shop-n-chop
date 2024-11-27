@@ -1,8 +1,12 @@
 package de.shopnchop.provideGroceries.rest
 
 import de.shopnchop.provideGroceries.GroceriesProcess
+import de.shopnchop.provideGroceries.converter.GroceriesChangeDtoConverter
 import de.shopnchop.provideGroceries.converter.GroceriesDtoConverter
+import de.shopnchop.provideGroceries.converter.GroceriesPurchaseDtoConverter
+import de.shopnchop.provideGroceries.dto.GroceriesChangeDTO
 import de.shopnchop.provideGroceries.dto.GroceriesDTO
+import de.shopnchop.provideGroceries.dto.GroceriesPurchaseDTO
 import de.shopnchop.provideRecipes.converter.RecipeDtoConverter
 import de.shopnchop.provideRecipes.dto.RecipeDTO
 import org.springframework.web.bind.annotation.GetMapping
@@ -13,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class GroceriesController(
     val groceriesDtoConverter: GroceriesDtoConverter,
+    val groceriesChangeDtoConverter: GroceriesChangeDtoConverter,
+    val groceriesPurchaseDtoConverter: GroceriesPurchaseDtoConverter,
     val recipeDtoConverter: RecipeDtoConverter,
     val groceriesProcess: GroceriesProcess,
 ) {
@@ -41,8 +47,8 @@ class GroceriesController(
     }
 
     @PostMapping("/changeGrocery")
-    fun changeGroceriesExpiration(@RequestBody dto: GroceriesDTO) {
-        groceriesProcess.changeGroceryItem(groceriesDtoConverter.dtoToDomain(dto))
+    fun changeGroceriesExpiration(@RequestBody dto: GroceriesChangeDTO) {
+        groceriesProcess.changeGroceryItem(groceriesChangeDtoConverter.dtoToDomain(dto))
     }
 
 
@@ -53,13 +59,12 @@ class GroceriesController(
     fun provideCalculatedGroceries(@RequestBody selectedRecipeDtos: List<RecipeDTO>): List<GroceriesDTO> {
         val selectedRecipes = selectedRecipeDtos.map { recipeDtoConverter.dtoToDomain(it) }
         val neededGroceries = groceriesProcess.calculateAllIngredients(selectedRecipes).map { groceriesDtoConverter.domainToDTO(it) }
-        // TODO: get and subtract availableGroceries
         return neededGroceries
     }
 
     @PostMapping("/groceries")
-    fun confirmGroceries(@RequestBody dto: List<GroceriesDTO>) {
-        val groceries = dto.map { groceriesDtoConverter.dtoToDomain(it) }
+    fun confirmGroceries(@RequestBody dto: List<GroceriesPurchaseDTO>) {
+        val groceries = dto.map { groceriesPurchaseDtoConverter.dtoToDomain(it) }
         groceriesProcess.saveGroceries(groceries)
     }
 
@@ -69,3 +74,7 @@ class GroceriesController(
         groceriesProcess.useGroceries(usedGroceries)
     }
 }
+
+
+
+

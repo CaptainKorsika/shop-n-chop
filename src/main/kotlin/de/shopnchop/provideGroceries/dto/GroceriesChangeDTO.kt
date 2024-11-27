@@ -1,8 +1,9 @@
 package de.shopnchop.provideGroceries.dto
 
-data class GroceriesDTO(
+data class GroceriesChangeDTO(
     val id: String?,
     val name: String,
     val amount: String,
-    val currentExpirationDate: String? = null
+    val currentExpirationDate: String,
+    val newExpirationDate: String
 )

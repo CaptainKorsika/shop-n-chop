@@ -14,37 +14,24 @@ class GroceriesEntityConverter {
             amountString = amountString.substring(0, amountString.length - 2)
         }
 
-        val purchaseDate = this.convertDateToString(groceries.purchaseDate)
         val expirationDate = this.convertDateToString(groceries.currentExpirationDate!!)
-
-        println(groceries.id)
-        println(groceries.name)
-        println(amountString)
-        println(purchaseDate)
-        println(expirationDate)
-
-
 
         return GroceriesEntity(
             groceries.id,
             groceries.name,
             amountString,
-            purchaseDate,
             expirationDate
         )
     }
 
     fun entityToDomain(entity: GroceriesEntity): Groceries {
-        val purchaseDate = this.convertStringToDate(entity.purchaseDate)
-        val expirationDate = this.convertStringToDate(entity.expirationDate)
-
+        val currentExpirationDate = this.convertStringToDate(entity.expirationDate)
 
         return Groceries(
             entity.id,
             entity.name,
             entity.amount.toDouble(),
-            purchaseDate,
-            expirationDate
+            currentExpirationDate
         )
     }
 
