@@ -4,5 +4,5 @@ data class Ingredient(
     val name: String,
     val unit: String,
     val category: String,
-    val durability: String
+    val durability: Int
 )

@@ -9,12 +9,13 @@ import java.util.*
 @Component
 class GroceriesDtoConverter {
     fun domainToDTO(groceries: Groceries): GroceriesDTO {
-        var formattedDate: String? = null
+        var formattedExpirationDate: String? = null
 
         if (groceries.currentExpirationDate != null) {
-            val formatter = SimpleDateFormat("dd.MM.yyyy")
-            formattedDate = formatter.format(groceries.currentExpirationDate)
+            formattedExpirationDate = this.convertDateToString(groceries.currentExpirationDate!!)
         }
+
+        val formattedPurchaseDate = this.convertDateToString(groceries.purchaseDate)
 
         var amountString = groceries.amount.toString()
         if (amountString.endsWith(".0")) {
@@ -25,7 +26,8 @@ class GroceriesDtoConverter {
             groceries.id,
             groceries.name,
             amountString,
-            formattedDate
+            formattedPurchaseDate,
+            formattedExpirationDate
         )
     }
 
@@ -33,26 +35,34 @@ class GroceriesDtoConverter {
         var currentDate: Date? = null
         var newDate: Date? = null
 
+        val purchaseDate = this.convertStringToDate(dto.purchaseDate)
+
         if (dto.currentExpirationDate != null) {
-            currentDate = convertDate(dto.currentExpirationDate)
+            currentDate = this.convertStringToDate(dto.currentExpirationDate)
         }
 
         if (dto.newExpirationDate != null) {
-            newDate = convertDate(dto.newExpirationDate)
+            newDate = this.convertStringToDate(dto.newExpirationDate)
         }
 
         return Groceries(
             dto.id,
             dto.name,
             dto.amount.toDouble(),
+            purchaseDate,
             currentDate,
             newDate
         )
     }
 
-    private fun convertDate(dateString: String): Date {
+    private fun convertStringToDate(dateString: String): Date {
         val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
         return dateFormat.parse(dateString)
+    }
+
+    private fun convertDateToString(date: Date): String {
+        val formatter = SimpleDateFormat("dd.MM.yyyy")
+        return formatter.format(date)
     }
 
 }

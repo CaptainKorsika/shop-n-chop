@@ -9,5 +9,6 @@ data class GroceriesEntity(
     val id: String? = null,
     val name: String,
     val amount: String,
+    val purchaseDate: String,
     val expirationDate: String
 )

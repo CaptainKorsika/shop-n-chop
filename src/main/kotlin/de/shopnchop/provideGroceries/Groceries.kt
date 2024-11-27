@@ -5,7 +5,8 @@ import java.util.Date
 data class Groceries(
     val id: String?,
     val name: String,
-    val amount: Double,
-    val currentExpirationDate: Date?,
+    var amount: Double,
+    val purchaseDate: Date,
+    var currentExpirationDate: Date?,
     val newExpirationDate: Date? = null
 )

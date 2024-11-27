@@ -12,7 +12,7 @@ class IngredientEntityConverter {
             ingredient.name,
             ingredient.unit,
             ingredient.category,
-            ingredient.durability
+            ingredient.durability.toString()
         )
     }
 
@@ -21,7 +21,7 @@ class IngredientEntityConverter {
             entity.name,
             entity.unit,
             entity.category,
-            entity.durability
+            entity.durability.toInt()
         )
     }
 }

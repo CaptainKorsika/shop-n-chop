@@ -7,10 +7,20 @@ import org.springframework.stereotype.Component
 @Component
 class IngredientDtoConverter {
     fun domainToDTO(ingredient: Ingredient): IngredientDTO {
-        return IngredientDTO(ingredient.name, ingredient.unit, ingredient.category, ingredient.durability)
+        return IngredientDTO(
+            ingredient.name,
+            ingredient.unit,
+            ingredient.category,
+            ingredient.durability.toString()
+        )
     }
 
     fun dtoToDomain(dto: IngredientDTO): Ingredient {
-        return Ingredient(dto.name, dto.unit, dto.category, dto.durability)
+        return Ingredient(
+            dto.name,
+            dto.unit,
+            dto.category,
+            dto.durability.toInt()
+        )
     }
 }
