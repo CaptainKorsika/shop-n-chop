@@ -28,5 +28,7 @@ class IngredientProcess(
         ingredientRepository.save(ingredientEntity)
     }
 
-
+    fun deleteIngredient(name: String) {
+        ingredientRepository.deleteById(name)
+    }
 }

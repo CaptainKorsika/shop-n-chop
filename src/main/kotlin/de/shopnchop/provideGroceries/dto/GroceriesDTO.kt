@@ -4,5 +4,6 @@ data class GroceriesDTO(
     val id: String?,
     val name: String,
     val amount: String,
-    val expirationDate: String?
+    val currentExpirationDate: String?,
+    val newExpirationDate: String? = null
 )

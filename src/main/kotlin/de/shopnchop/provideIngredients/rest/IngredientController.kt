@@ -38,16 +38,8 @@ class IngredientController(
         ingredientProcess.saveIngredient(ingredient)
     }
 
-
-//    fun deleteIngredient() {
-//
-//
-//        future implementation
-//
-//    }
-
-
-
-
-
+    @PostMapping("deleteIngredient/{name}")
+    fun deleteIngredientByName(@PathVariable name: String) {
+        ingredientProcess.deleteIngredient(name)
+    }
 }

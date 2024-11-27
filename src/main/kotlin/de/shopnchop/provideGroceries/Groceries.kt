@@ -6,5 +6,6 @@ data class Groceries(
     val id: String?,
     val name: String,
     val amount: Double,
-    val expirationDate: Date?
+    val currentExpirationDate: Date?,
+    val newExpirationDate: Date? = null
 )

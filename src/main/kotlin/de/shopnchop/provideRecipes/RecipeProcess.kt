@@ -15,7 +15,6 @@ class RecipeProcess(val recipeRepository: RecipeRepository, val recipeEntityConv
     }
 
     fun fetchRecipeById(id: String): Recipe? {
-
         val recipeOrNull = recipeRepository.findById(id)
         if (recipeOrNull.isEmpty()) {
             return null

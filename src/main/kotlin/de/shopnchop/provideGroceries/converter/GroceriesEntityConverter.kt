@@ -10,7 +10,7 @@ import java.util.*
 class GroceriesEntityConverter {
     fun domainToEntity(groceries: Groceries): GroceriesEntity {
         val formatter = SimpleDateFormat("dd.MM.yyyy")
-        val formattedDate = formatter.format(groceries.expirationDate)
+        val formattedDate = formatter.format(groceries.currentExpirationDate)
 
         var amountString = groceries.amount.toString()
         if (amountString.endsWith(".0")) {

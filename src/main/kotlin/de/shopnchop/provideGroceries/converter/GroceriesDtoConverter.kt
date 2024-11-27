@@ -11,9 +11,9 @@ class GroceriesDtoConverter {
     fun domainToDTO(groceries: Groceries): GroceriesDTO {
         var formattedDate: String? = null
 
-        if (groceries.expirationDate != null) {
+        if (groceries.currentExpirationDate != null) {
             val formatter = SimpleDateFormat("dd.MM.yyyy")
-            formattedDate = formatter.format(groceries.expirationDate)
+            formattedDate = formatter.format(groceries.currentExpirationDate)
         }
 
         var amountString = groceries.amount.toString()
@@ -25,23 +25,34 @@ class GroceriesDtoConverter {
             groceries.id,
             groceries.name,
             amountString,
-            formattedDate,
+            formattedDate
         )
     }
 
     fun dtoToDomain(dto: GroceriesDTO): Groceries {
-        var date: Date? = null
+        var currentDate: Date? = null
+        var newDate: Date? = null
 
-        if (dto.expirationDate != null) {
-            val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-            date = dateFormat.parse(dto.expirationDate)
+        if (dto.currentExpirationDate != null) {
+            currentDate = convertDate(dto.currentExpirationDate)
+        }
+
+        if (dto.newExpirationDate != null) {
+            newDate = convertDate(dto.newExpirationDate)
         }
 
         return Groceries(
             dto.id,
             dto.name,
             dto.amount.toDouble(),
-            date
+            currentDate,
+            newDate
         )
     }
+
+    private fun convertDate(dateString: String): Date {
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        return dateFormat.parse(dateString)
+    }
+
 }
