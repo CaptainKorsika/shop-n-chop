@@ -25,10 +25,10 @@ class GroceriesProcess(
 
     fun saveGroceries(groceries: List<Groceries>) {
         groceries.forEach { grocery ->
+            // TODO: Implement logic when ingredient not in DB
             var calculatedExpirationDate = formatDate(Date())
             // val entity = groceriesEntityConverter.domainToEntity(grocery)
 
-            // TODO: Implement logic when ingredient not in DB
             val ingredient = ingredientProcess.fetchIngredientByName(grocery.name)
             if (ingredient != null) {
                 val ingredientDurability = ingredient.durability
@@ -67,8 +67,11 @@ class GroceriesProcess(
         }
     }
 
+    // TODO: Use logic when one ingredient is missing
     fun useGroceries(@RequestBody usedGroceries: List<Groceries>) {
         val dateToday = this.formatDate(Date())
+        val itemsToDelete = mutableListOf<GroceriesEntity>()
+        val itemsToUpdate = mutableListOf<GroceriesEntity>()
 
         usedGroceries.forEach { usedItem ->
             var neededAmount = usedItem.amount
@@ -89,9 +92,6 @@ class GroceriesProcess(
             var currentIndex = 0
             while (neededAmount > 0) {
                 val foundItem = matchingItems[currentIndex]
-                val itemId = this.fetchByNameAndDate(
-                    foundItem.name,
-                    groceriesEntityConverter.domainToEntity(foundItem).expirationDate)
 
                 lateinit var updatedGroceriesEntity: GroceriesEntity
 
@@ -99,21 +99,29 @@ class GroceriesProcess(
                     neededAmount -= foundItem.amount
 
                     updatedGroceriesEntity = groceriesEntityConverter.domainToEntity(foundItem)
-                    groceriesRepository.delete(updatedGroceriesEntity)
+                    itemsToDelete.add(updatedGroceriesEntity)
                 } else {
                     val updatedGrocery = Groceries(
                         foundItem.id,
                         foundItem.name,
                         foundItem.amount - neededAmount,
-                        foundItem.purchaseDate,
-                        foundItem.currentExpirationDate
+                        foundItem.currentExpirationDate,
+                        foundItem.purchaseDate
                     )
+
                     updatedGroceriesEntity = groceriesEntityConverter.domainToEntity(updatedGrocery)
-                    groceriesRepository.save(updatedGroceriesEntity)
+                    itemsToUpdate.add(updatedGroceriesEntity)
                     neededAmount = 0.0
                 }
                 currentIndex++
             }
+        }
+
+        itemsToDelete.forEach {
+            groceriesRepository.delete(it)
+        }
+        itemsToUpdate.forEach {
+            groceriesRepository.save(it)
         }
     }
 

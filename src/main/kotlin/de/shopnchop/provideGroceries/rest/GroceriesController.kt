@@ -10,6 +10,7 @@ import de.shopnchop.provideGroceries.dto.GroceriesPurchaseDTO
 import de.shopnchop.provideRecipes.converter.RecipeDtoConverter
 import de.shopnchop.provideRecipes.dto.RecipeDTO
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -50,8 +51,6 @@ class GroceriesController(
     fun changeGroceriesExpiration(@RequestBody dto: GroceriesChangeDTO) {
         groceriesProcess.changeGroceryItem(groceriesChangeDtoConverter.dtoToDomain(dto))
     }
-
-
 
     // no id
 
