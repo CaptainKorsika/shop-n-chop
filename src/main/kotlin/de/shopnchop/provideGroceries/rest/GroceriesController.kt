@@ -9,6 +9,7 @@ import de.shopnchop.provideGroceries.dto.GroceriesDTO
 import de.shopnchop.provideGroceries.dto.GroceriesPurchaseDTO
 import de.shopnchop.provideRecipes.converter.RecipeDtoConverter
 import de.shopnchop.provideRecipes.dto.RecipeDTO
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
