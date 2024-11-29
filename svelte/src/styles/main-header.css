@@ -1,0 +1,23 @@
+header {
+    width: 100%;
+    height: 12%;
+    box-sizing: border-box;
+    padding: 7px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-section{
+    display: flex;
+    justify-content: start;
+    width: 40%;
+}
+
+.recipe-section{
+    margin-right: 30px;
+}
+
+.show-fridge{
+    margin-top: 48px;
+    margin-right: 2%;
+}

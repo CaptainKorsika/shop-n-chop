@@ -1,117 +1,28 @@
 <script>
     import {onMount} from "svelte";
-    onMount(() => {
-        const requestHeaders = new Headers()
-        requestHeaders.set("Access-Control-Allow-Origin", "*")
-        requestHeaders.set('Access-Control-Allow-Headers', "*")
-        fetch("http://localhost:8080/shopnchop/recipes", { headers: requestHeaders }).then((response) => {console.log(response.json())})
-    })
+    import "../styles/main-frame.css"
+    import Header from "../components/MainHeader.svelte";
+    import Footer from "../components/Footer.svelte";
+    import Form from "../components/Form.svelte";
 
-    import "./page.css"
+
+    let allRecipes;
+    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+
+    onMount(async () => {
+        const response = await fetch("http://localhost:8080/shopnchop/recipes")
+        allRecipes = await response.json()
+    })
 </script>
 
 
 <div class="frame">
-    <header>
-        <div class="button-section">
-            <div class="recipe-section">
-                <button class="create-recipe">Create New Recipe</button>
-                <button class="show-recipes">Show Recipes</button>
-            </div>
-            <div class="ingredient-section">
-                <button>Add Ingredient</button>
-                <button>Show Ingredients</button>
-            </div>
-        </div>
-        <button class="show-fridge">Show Fridge</button>
-    </header>
+    <Header/>
     <div class="main-content-wrapper">
-        <form>
-            <div class="recipe-selection-wrapper">
-                <label for="monday">Monday:</label>
-                <select name="monday-recipe" id="monday">
-                </select>
-            </div>
-
-            <div class="recipe-buttons-wrapper">
-                <button class="recipe-buttons">Edit</button>
-                <button class="recipe-buttons">Cook</button>
-            </div>
-        </form>
-        <form>
-            <div class="recipe-selection-wrapper">
-                <label for="tuesday">Tuesday:</label>
-                <select name="tuesday-recipe" id="tuesday">
-                </select>
-            </div>
-
-            <div class="recipe-buttons-wrapper">
-                <button class="recipe-buttons">Edit</button>
-                <button class="recipe-buttons">Cook</button>
-            </div>
-        </form>
-        <form>
-            <div class="recipe-selection-wrapper">
-                <label for="wednesday">Wednesday</label>
-                <select name="wednesday-recipe" id="wednesday">
-                </select>
-            </div>
-
-            <div class="recipe-buttons-wrapper">
-                <button class="recipe-buttons">Edit</button>
-                <button class="recipe-buttons">Cook</button>
-            </div>
-        </form>
-        <form>
-            <div class="recipe-selection-wrapper">
-                <label for="thursday">Thursday:</label>
-                <select name="thursday-recipe" id="thursday">
-                </select>
-            </div>
-
-            <div class="recipe-buttons-wrapper">
-                <button class="recipe-buttons">Edit</button>
-                <button class="recipe-buttons">Cook</button>
-            </div>
-        </form>
-        <form>
-            <div class="recipe-selection-wrapper">
-                <label for="friday">Friday:</label>
-                <select name="friday-recipe" id="friday">
-                </select>
-            </div>
-
-            <div class="recipe-buttons-wrapper">
-                <button class="recipe-buttons">Edit</button>
-                <button class="recipe-buttons">Cook</button>
-            </div>
-        </form>
-        <form>
-            <div class="recipe-selection-wrapper">
-                <label for="saturday">Saturday:</label>
-                <select name="saturday-recipe" id="saturday">
-                </select>
-            </div>
-
-            <div class="recipe-buttons-wrapper">
-                <button class="recipe-buttons">Edit</button>
-                <button class="recipe-buttons">Cook</button>
-            </div>
-        </form>
-        <form>
-            <div class="recipe-selection-wrapper">
-                <label for="sunday">Sunday:</label>
-                <select name="sunday-recipe" id="sunday">
-                </select>
-            </div>
-
-            <div class="recipe-buttons-wrapper">
-                <button class="recipe-buttons">Edit</button>
-                <button class="recipe-buttons">Cook</button>
-            </div>
-        </form>
+        {#each days as day}
+            <Form day={day} data={allRecipes}/>
+        {/each}
     </div>
-    <footer>
-        <button class="footer-button">Create grocery list</button>
-    </footer>
+    <Footer/>
 </div>

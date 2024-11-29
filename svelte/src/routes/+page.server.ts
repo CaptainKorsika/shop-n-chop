@@ -1,3 +1,3 @@
-export function fetchRecipes() {
-    fetch("/recipes").then(() => {console.log("test")})
+export async function fetchRecipes() {
+    return await fetch("http://localhost:8080/shopnchop/recipes")
 }

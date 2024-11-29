@@ -1,0 +1,11 @@
+li{
+    display: flex;
+    justify-content: space-around;
+}
+
+.grocery-edit-button{
+    width: 35px;
+    height: 35px;
+}
+
+
