@@ -37,8 +37,8 @@
             {/if}
         </div>
     </form>
-    <div class="recipe-buttons-wrapper">
-        <button class="recipe-buttons" onclick={() => {selectedItem = {}}} >Edit</button>
-        <button class="recipe-buttons">Cook</button>
+    <div class="item-buttons-wrapper">
+        <button class="item-buttons" onclick={() => {selectedItem = {}}} >Edit</button>
+        <button class="item-buttons">Cook</button>
     </div>
 </div>

@@ -1,9 +1,9 @@
 <script>
-    import "../styles/main-header.css"
+    import "../styles/header.css"
     import {goto} from "$app/navigation";
 
-    function navigate() {
-         goto('/fridge');
+    function navigate(route) {
+         goto(`/${route}`);
     }
 </script>
 
@@ -12,13 +12,11 @@
 <header>
     <div class="button-section">
         <div class="recipe-section">
-            <button class="create-recipe">Create New Recipe</button>
-            <button class="show-recipes">Show Recipes</button>
+            <button class="show-recipes" on:click={() => {navigate("recipes")}}>Manage Recipes</button>
         </div>
         <div class="ingredient-section">
-            <button>Add Ingredient</button>
-            <button>Show Ingredients</button>
+            <button on:click={() => {navigate("ingredients")}}>Manage Ingredients</button>
         </div>
     </div>
-    <button class="show-fridge" on:click={navigate}>Open Fridge</button>
+    <button class="show-fridge" on:click={() => {navigate("fridge")}}>Open Fridge</button>
 </header>

@@ -2,7 +2,9 @@
 
 
 
-    import "../../styles/main-frame.css"
+    import "../../styles/frame.css"
+    import "../../styles/header.css"
+    import "../../styles/footer.css"
     import "../../styles/fridge.css"
     import {onMount} from "svelte";
     import {goto} from "$app/navigation";
@@ -60,10 +62,10 @@
 
 
 <div class="frame">
-    <div>
+    <header>
         <button on:click={() => {onlyExpired = !onlyExpired}}>Toggle Expired Only</button>
         <button on:click={navigate}>CloseFridge</button>
-    </div>
+    </header>
     <div class="main-content-wrapper">
         <ul>
             {#if !onlyExpired}
@@ -94,7 +96,9 @@
             {/if}
         </ul>
     </div>
-    {#if onlyExpired}
-        <button on:click={() => deleteAllExpired(expiredGroceries)}>Throw away Expired</button>
-    {/if}
+    <footer>
+        {#if onlyExpired}
+            <button on:click={() => deleteAllExpired(expiredGroceries)}>Throw away Expired</button>
+        {/if}
+    </footer>
 </div>

@@ -1,6 +1,9 @@
 <script>
     import {onMount} from "svelte";
-    import "../styles/main-frame.css"
+    import "../styles/frame.css"
+    import "../styles/header.css"
+    import "../styles/footer.css"
+    import "../styles/main.css"
     import Header from "../components/MainHeader.svelte";
     import Footer from "../components/Footer.svelte";
     import Form from "../components/Form.svelte";

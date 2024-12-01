@@ -1,0 +1,35 @@
+.form-wrapper{
+    display: flex;
+}
+
+form{
+    width: 90%;
+    height: 8%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+}
+
+label{
+    font-size: 24px;
+    color: #1B262C;
+    display: inline-block;
+    width: 120px;
+    padding: 10px 0;
+}
+
+select{
+    width: 180px;
+    height: 24px;
+    margin: 15px;
+    display: block;
+    background-color: #BBE1FA;
+    border-radius: 5px;
+}
+
+.recipe-selection-wrapper{
+    margin: auto 20px;
+    width: 400px;
+    display: flex;
+}

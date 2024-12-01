@@ -19,5 +19,5 @@ export function updateRecipeStorage(recipe: Recipe) {
 
 selectedRecipesStorage.subscribe(data => {
     const selectedRecipesJSON = JSON.stringify(data)
-    window.sessionStorage.setItem("selectedRecipes", selectedRecipesJSON)
+    // window.sessionStorage.setItem("selectedRecipes", selectedRecipesJSON)
 })
