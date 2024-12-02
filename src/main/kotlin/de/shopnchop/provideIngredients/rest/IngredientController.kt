@@ -1,5 +1,6 @@
 package de.shopnchop.provideIngredients.rest
 
+import de.shopnchop.provideIngredients.Ingredient
 import de.shopnchop.provideIngredients.IngredientProcess
 import de.shopnchop.provideIngredients.converter.IngredientDtoConverter
 import de.shopnchop.provideIngredients.dto.IngredientDTO
@@ -39,7 +40,10 @@ class IngredientController(
     }
 
     @PostMapping("deleteIngredient/{name}")
-    fun deleteIngredientByName(@PathVariable name: String) {
+    fun deleteIngredientByName(@PathVariable name: String): List<IngredientDTO> {
         ingredientProcess.deleteIngredient(name)
+        return ingredientProcess
+            .fetchIngredients()
+            .map { ingredientDtoConverter.domainToDTO(it) }
     }
 }

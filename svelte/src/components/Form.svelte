@@ -1,17 +1,43 @@
 <script>
 
-    import {updateRecipeStorage} from "$lib/storage.ts";
+    import {deleteDataFromSessionStorage, readDataFromSessionStorage, updateRecipeStorage} from "$lib/storage.ts";
+    import {onMount} from "svelte";
 
     let props = $props();
     let selectedItem = $state({})
 
     function selectRecipe(name) {
         selectedItem = props.data.find(item => item.name === name);
-        updateRecipeStorage({name: selectedItem.name})
+
+        const storageObject = {
+            "day": props.day,
+            "selectedRecipe": selectedItem
+        }
+        updateRecipeStorage(storageObject)
     }
+
+    function editSelectedRecipe() {
+        deleteDataFromSessionStorage(props.day)
+        selectedItem = {}
+    }
+
+    function insertDataFromSessionStorage() {
+        const storageData = readDataFromSessionStorage()
+        const matchingRecipe = storageData.filter(recipe => recipe.day === props.day);
+
+
+        if (Object.keys(matchingRecipe).length === 0) {
+            return {}
+        } else {
+            return matchingRecipe[0].selectedRecipe
+        }
+    }
+
+    onMount(async () => {
+        selectedItem = insertDataFromSessionStorage()
+    })
+
 </script>
-
-
 
 <div class="form-wrapper">
     <form>
@@ -38,7 +64,7 @@
         </div>
     </form>
     <div class="item-buttons-wrapper">
-        <button class="item-buttons" onclick={() => {selectedItem = {}}} >Edit</button>
+        <button class="item-buttons" onclick={editSelectedRecipe} >Edit</button>
         <button class="item-buttons">Cook</button>
     </div>
 </div>

@@ -15,6 +15,18 @@
         allIngredients = await response.json()
     })
 
+
+    async function deleteIngredient(ingredient) {
+        const response = await fetch(`http://localhost:8080/shopnchop/deleteIngredient/${ingredient.name}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        allIngredients = await response.json()
+    }
+
+
     function navigate(name = "/") {
         goto(`${name}`);
     }
@@ -30,7 +42,10 @@
     <div class="main-content-wrapper">
         <ul>
             {#each allIngredients as ingredient}
-                <IngredientItem {ingredient}/>
+                <IngredientItem
+                        ingredient={ingredient}
+                        deleteCallbackFunction={() => {deleteIngredient(ingredient)}}
+                />
             {/each}
         </ul>
     </div>

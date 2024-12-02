@@ -37,8 +37,6 @@
     }
 </script>
 
-
-
 <div class="frame">
     <header>
         <button onclick={() => {navigate("ingredients")}}>Cancel</button>
