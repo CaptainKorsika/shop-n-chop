@@ -1,0 +1,17 @@
+form{
+    width: 90%;
+    height: 8%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+}
+label{
+    margin: auto 0;
+}
+
+input{
+    width: 200px;
+    height: 20px;
+    margin: auto 0;
+}

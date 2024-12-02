@@ -2,9 +2,11 @@
     import "../../styles/frame.css"
     import "../../styles/header.css"
     import "../../styles/footer.css"
+    import "../../styles/ingredients.css"
 
     import {goto} from "$app/navigation";
     import {onMount} from "svelte";
+    import IngredientItem from "../../components/IngredientItem.svelte";
 
     let allIngredients;
 
@@ -13,8 +15,8 @@
         allIngredients = await response.json()
     })
 
-    function navigate() {
-        goto('/');
+    function navigate(name = "/") {
+        goto(`${name}`);
     }
 </script>
 
@@ -22,21 +24,16 @@
 
 <div class="frame">
     <header>
-        <button>Add Ingredient</button>
-        <button onclick={navigate}>Go Back</button>
+        <button onclick={() => {navigate("addIngredients")}}>Add Ingredient</button>
+        <button onclick={() => {navigate()}}> Go Back</button>
     </header>
     <div class="main-content-wrapper">
         <ul>
             {#each allIngredients as ingredient}
-                <li>
-                    {ingredient.name}
-                    <button>Edit</button>
-                    <button>Trash</button>
-                </li>
+                <IngredientItem {ingredient}/>
             {/each}
         </ul>
     </div>
     <footer>
-
     </footer>
 </div>
