@@ -16,6 +16,7 @@ class GroceriesPurchaseDtoConverter {
             null,
             dto.name,
             dto.amount.toDouble(),
+            dto.unit,
             null,
             purchaseDate
         )

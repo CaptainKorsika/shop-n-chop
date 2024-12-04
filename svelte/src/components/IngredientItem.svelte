@@ -42,9 +42,9 @@
 {#if isEditable}
     <div class="edit-ingredient-wrapper">
         <h4>{ingredient.name}</h4>
-        <input id="unit-input" type="text" value={ingredient.unit}>
-        <input id="category-input" type="text" value={ingredient.category}>
-        <input id="durability-input" type="text" value={ingredient.durability}>
+        <input id="unit-input" class="edit-ingredient-input" type="text" value={ingredient.unit}>
+        <input id="category-input" class="edit-ingredient-input" type="text" value={ingredient.category}>
+        <input id="durability-input" class="edit-ingredient-input" type="text" value={ingredient.durability}>
         <div class="item-buttons-wrapper">
             <button class="item-buttons" onclick={toggleEditable}>Cancel</button>
             <button class="item-buttons" onclick={confirmItemEdit}>Confirm</button>

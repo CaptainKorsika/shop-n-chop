@@ -42,6 +42,7 @@ class GroceriesProcess(
                     grocery.id,
                     grocery.name,
                     grocery.amount,
+                    grocery.unit,
                     calculatedExpirationDate
                 ))
 
@@ -51,6 +52,7 @@ class GroceriesProcess(
                     null,
                     entity.name,
                     entity.amount,
+                    entity.unit,
                     entity.expirationDate
                 ))
             } else {
@@ -60,6 +62,7 @@ class GroceriesProcess(
                         matchingEntry.id,
                         entity.name,
                         newAmount,
+                        entity.unit,
                         entity.expirationDate
                     )
                 )
@@ -105,6 +108,7 @@ class GroceriesProcess(
                         foundItem.id,
                         foundItem.name,
                         foundItem.amount - neededAmount,
+                        foundItem.unit,
                         foundItem.currentExpirationDate,
                         foundItem.purchaseDate
                     )
@@ -156,6 +160,7 @@ class GroceriesProcess(
                     null,
                     groceries.name,
                     groceries.amount - availableAmount,
+                    groceries.unit,
                     groceries.purchaseDate,
                     null
                 ))
@@ -192,6 +197,7 @@ class GroceriesProcess(
             groceryEntity.id,
             groceryEntity.name,
             groceryEntity.amount,
+            groceryEntity.unit,
             formatDateToString(groceryItem.newExpirationDate!!)
         )
         groceriesRepository.save(updatedGroceryEntity)
@@ -229,6 +235,7 @@ class GroceriesProcess(
             null,
             it.name,
             it.amount,
+            it.unit,
             Date(),
             null
         ) }

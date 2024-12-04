@@ -24,6 +24,7 @@ class GroceriesDtoConverter {
             groceries.id,
             groceries.name,
             amountString,
+            groceries.unit,
             formattedExpirationDate
         )
     }
@@ -39,6 +40,7 @@ class GroceriesDtoConverter {
             dto.id,
             dto.name,
             dto.amount.toDouble(),
+            dto.unit,
             currentDate
         )
     }

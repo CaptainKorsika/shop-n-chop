@@ -9,3 +9,12 @@ li{
 }
 
 
+.amount-wrapper{
+    width: 100px;
+    display: flex;
+    justify-content: start;
+}
+
+.amount-wrapper > h4 {
+    margin: auto 3px;
+}

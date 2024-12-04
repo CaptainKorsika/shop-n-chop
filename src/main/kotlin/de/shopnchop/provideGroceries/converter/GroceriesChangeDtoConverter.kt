@@ -19,6 +19,7 @@ class GroceriesChangeDtoConverter {
             dto.id,
             dto.name,
             dto.amount.toDouble(),
+            dto.unit,
             currentExpirationDate,
             newExpirationDate = newExpirationDate
         )

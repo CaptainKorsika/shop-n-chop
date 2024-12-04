@@ -1,0 +1,22 @@
+.grocery-item{
+    display: flex;
+    justify-content: space-around;
+    width: 300px;
+    margin: auto;
+}
+
+.groceries-amount-wrapper{
+    width: 200px;
+    display: flex;
+    justify-content: start;
+    margin: auto 10px;
+}
+
+.groceries-amount-wrapper > h4 {
+    margin: auto 3px;
+}
+
+.grocery-amount-input{
+    width: 50px;
+    margin: auto 5px;
+}

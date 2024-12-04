@@ -1,7 +1,5 @@
 <script>
 
-
-
     import "../../styles/frame.css"
     import "../../styles/header.css"
     import "../../styles/footer.css"
@@ -71,22 +69,27 @@
             {#if !onlyExpired}
                 {#each allGroceries as grocery}
                     <li>
-                        <h3>{grocery.amount}</h3>
-                        <h3>{grocery.name}</h3>
-                        <h3>Expiration: &ensp; { grocery.currentExpirationDate}</h3>
+                        <div class="amount-wrapper">
+                            <h4>{grocery.amount}</h4>
+                            <h4>{grocery.unit}</h4>
+                        </div>
+                        <h4>{grocery.name}</h4>
+                        <h4>Expiration:  { grocery.currentExpirationDate}</h4>
                         <div>
                             <button class="grocery-edit-button">Edit</button>
                             <button class="grocery-edit-button" on:click={() => deleteGrocery(grocery)}>Trash</button>
                         </div>
-
                     </li>
                 {/each}
             {:else}
                 {#each expiredGroceries as grocery}
                     <li>
-                        <h3>{grocery.amount}</h3>
-                        <h3>{grocery.name}</h3>
-                        <h3 style="color: #a90000">Expiration: &ensp; {grocery.currentExpirationDate}</h3>
+                        <div class="amount-wrapper">
+                            <h4>{grocery.amount}</h4>
+                            <h4>{grocery.unit}</h4>
+                        </div>
+                        <h4>{grocery.name}</h4>
+                        <h4 style="color: #a90000">Expiration: &ensp; {grocery.currentExpirationDate}</h4>
                         <div>
                             <button class="grocery-edit-button">Edit</button>
                             <button class="grocery-edit-button" on:click={() => deleteGrocery(grocery)}>Trash</button>

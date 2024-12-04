@@ -33,6 +33,29 @@
         }
     }
 
+    function cookMeal() {
+        let groceries = []
+        selectedItem.ingredients.forEach(ingredient => {
+            groceries.push({
+                name: ingredient.name,
+                amount: ingredient.amount,
+                unit: ingredient.unit
+            })
+        })
+
+        fetch('http://localhost:8080/shopnchop/cook', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(groceries)
+        });
+
+        editSelectedRecipe()
+    }
+
+
+
     onMount(async () => {
         selectedItem = insertDataFromSessionStorage()
     })
@@ -65,6 +88,6 @@
     </form>
     <div class="item-buttons-wrapper">
         <button class="item-buttons" onclick={editSelectedRecipe} >Edit</button>
-        <button class="item-buttons">Cook</button>
+        <button class="item-buttons" onclick={cookMeal} >Cook</button>
     </div>
 </div>

@@ -9,7 +9,7 @@ li{
     width: 400px;
 }
 
-input{
+.edit-ingredient-input{
     width: 100px;
     height: 20px;
     margin: auto 0;

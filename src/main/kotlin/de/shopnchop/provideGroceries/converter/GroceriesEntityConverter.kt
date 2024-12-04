@@ -20,6 +20,7 @@ class GroceriesEntityConverter {
             groceries.id,
             groceries.name,
             amountString,
+            groceries.unit,
             expirationDate
         )
     }
@@ -31,6 +32,7 @@ class GroceriesEntityConverter {
             entity.id,
             entity.name,
             entity.amount.toDouble(),
+            entity.unit,
             currentExpirationDate
         )
     }
