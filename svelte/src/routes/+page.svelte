@@ -7,20 +7,10 @@
     import Header from "../components/MainHeader.svelte";
     import Footer from "../components/Footer.svelte";
     import Form from "../components/Form.svelte";
-    import {goto} from "$app/navigation";
 
 
     let allRecipes;
     const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-
-
-    function createGroceryList() {
-
-        goto("/fridge")
-
-
-
-    }
 
     onMount(async () => {
         const response = await fetch("http://localhost:8080/shopnchop/recipes")
@@ -36,5 +26,5 @@
             <Form day={day} data={allRecipes}/>
         {/each}
     </div>
-    <Footer createGroceryList={() => {createGroceryList}}/>
+    <Footer/>
 </div>

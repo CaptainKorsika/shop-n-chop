@@ -6,6 +6,7 @@
     import "../../styles/fridge.css"
     import {onMount} from "svelte";
     import {goto} from "$app/navigation";
+    import FridgeItem from "../../components/FridgeItem.svelte";
 
     let allGroceries;
     let expiredGroceries;
@@ -68,18 +69,7 @@
         <ul>
             {#if !onlyExpired}
                 {#each allGroceries as grocery}
-                    <li>
-                        <div class="amount-wrapper">
-                            <h4>{grocery.amount}</h4>
-                            <h4>{grocery.unit}</h4>
-                        </div>
-                        <h4>{grocery.name}</h4>
-                        <h4>Expiration:  { grocery.currentExpirationDate}</h4>
-                        <div>
-                            <button class="grocery-edit-button">Edit</button>
-                            <button class="grocery-edit-button" on:click={() => deleteGrocery(grocery)}>Trash</button>
-                        </div>
-                    </li>
+                    <FridgeItem grocery={grocery} deleteGrocery={deleteGrocery} />
                 {/each}
             {:else}
                 {#each expiredGroceries as grocery}

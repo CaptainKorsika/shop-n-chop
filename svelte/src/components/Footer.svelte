@@ -2,8 +2,6 @@
     import "../styles/footer.css"
     import {goto} from "$app/navigation";
 
-    export let createGroceryList;
-
     function navigate() {
         goto("/groceries")
     }
