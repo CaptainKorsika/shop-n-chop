@@ -2,7 +2,7 @@ package de.shopnchop.provideRecipes
 
 
 data class Recipe(
-    val id: String,
+    val id: String?,
     val name: String,
     val manual: String,
     val duration: String,

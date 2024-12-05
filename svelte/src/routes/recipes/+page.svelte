@@ -4,6 +4,7 @@
     import "../../styles/footer.css"
     import {goto} from "$app/navigation";
     import {onMount} from "svelte";
+    import RecipePreview from "../../components/RecipePreview.svelte";
 
     let allRecipes;
 
@@ -25,13 +26,9 @@
         <button onclick={navigate}>Go Back</button>
     </header>
     <div class="main-content-wrapper">
-        <ul>
-            {#each allRecipes as recipe}
-                <li>
-                    {recipe.name}
-                </li>
-            {/each}
-        </ul>
+        {#each allRecipes as recipe}
+            <RecipePreview recipe={recipe}/>
+        {/each}
     </div>
     <footer>
 

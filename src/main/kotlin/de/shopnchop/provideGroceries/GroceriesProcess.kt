@@ -24,7 +24,9 @@ class GroceriesProcess(
     }
 
     fun saveGroceries(groceries: List<Groceries>) {
-        groceries.forEach { grocery ->
+        groceries
+            .filter { it.amount > 0 }
+            .forEach { grocery ->
             // TODO: Implement logic when ingredient not in DB
             var calculatedExpirationDate = formatDate(Date())
             // val entity = groceriesEntityConverter.domainToEntity(grocery)

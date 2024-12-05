@@ -5,7 +5,8 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @Document(collection = "recipe")
 data class RecipeEntity(
-    @Id val id: String,
+    @Id
+    val id: String? = null,
     val name: String,
     val manual: String,
     val duration: String,

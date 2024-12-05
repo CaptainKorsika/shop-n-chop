@@ -62,6 +62,7 @@
 
 </script>
 
+
 <div class="form-wrapper">
     <form>
         <div class="recipe-selection-wrapper">
@@ -88,6 +89,6 @@
     </form>
     <div class="item-buttons-wrapper">
         <button class="item-buttons" onclick={editSelectedRecipe} >Edit</button>
-        <button class="item-buttons" onclick={cookMeal} >Cook</button>
+        <button class="item-buttons" onclick={cookMeal} >Eat</button>
     </div>
 </div>
