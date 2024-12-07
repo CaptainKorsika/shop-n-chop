@@ -63,7 +63,7 @@
         <h4>Expiration:  { grocery.currentExpirationDate}</h4>
         <div>
             <button class="grocery-edit-button" onclick={() => {isEditable = !isEditable}} >Edit</button>
-            <button class="grocery-edit-button" onclick={() => deleteGrocery(grocery)}>Trash</button>
+            <button class="grocery-edit-button" onclick={() => deleteGrocery(grocery)}>Bin</button>
         </div>
     </li>
 {/if}

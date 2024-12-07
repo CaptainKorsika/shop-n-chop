@@ -1,5 +1,5 @@
 <script>
-
+    import "../styles/recipePreview.css"
     import {goto} from "$app/navigation";
 
     export let recipe;
@@ -12,6 +12,5 @@
 
 
 <div class="recipe-preview-wrapper" onclick={() => {goto(`/recipes/${recipe.name}`)}}>
-    {recipe.name}
-    {recipe.duration}
+    <h2>{recipe.name}</h2>
 </div>

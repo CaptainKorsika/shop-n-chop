@@ -2,6 +2,7 @@
     import "../../styles/frame.css"
     import "../../styles/header.css"
     import "../../styles/footer.css"
+    import "../../styles/recipes.css"
     import {goto} from "$app/navigation";
     import {onMount} from "svelte";
     import RecipePreview from "../../components/RecipePreview.svelte";
@@ -13,8 +14,8 @@
         allRecipes = await response.json()
     })
 
-    function navigate() {
-        goto('/');
+    function navigate(path) {
+        goto(`${path}`);
     }
 </script>
 
@@ -22,10 +23,10 @@
 
 <div class="frame">
     <header>
-        <button class="create-recipe">Create New Recipe</button>
-        <button onclick={navigate}>Go Back</button>
+        <button class="create-recipe" onclick={() => {navigate("addRecipe")}}>Create New Recipe</button>
+        <button onclick={() => {navigate("/")}}>Go Back</button>
     </header>
-    <div class="main-content-wrapper">
+    <div class="main-recipe-wrapper">
         {#each allRecipes as recipe}
             <RecipePreview recipe={recipe}/>
         {/each}

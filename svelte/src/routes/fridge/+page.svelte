@@ -72,18 +72,7 @@
                 {/each}
             {:else}
                 {#each expiredGroceries as grocery}
-                    <li>
-                        <div class="amount-wrapper">
-                            <h4>{grocery.amount}</h4>
-                            <h4>{grocery.unit}</h4>
-                        </div>
-                        <h4>{grocery.name}</h4>
-                        <h4 style="color: #a90000">Expiration: &ensp; {grocery.currentExpirationDate}</h4>
-                        <div>
-                            <button class="grocery-edit-button">Edit</button>
-                            <button class="grocery-edit-button" on:click={() => deleteGrocery(grocery)}>Trash</button>
-                        </div>
-                    </li>
+                    <FridgeItem grocery={grocery} deleteGrocery={deleteGrocery} />
                 {/each}
             {/if}
         </ul>
