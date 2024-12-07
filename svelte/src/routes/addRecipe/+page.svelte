@@ -1,4 +1,7 @@
 <script>
+    import "../../styles/frame.css"
+    import "../../styles/header.css"
+    import "../../styles/footer.css"
     import "../../styles/addRecipe.css"
     import {goto} from "$app/navigation";
     import AddRecipeIngredient from "../../components/AddRecipeIngredient.svelte";
@@ -14,6 +17,10 @@
 
     function navigate(path) {
         goto(`${path}`)
+    }
+
+    function createRecipe() {
+
     }
 
 
@@ -52,6 +59,6 @@
 
     </div>
     <footer>
-
+        <button onclick={createRecipe}>Create recipe</button>
     </footer>
 </div>

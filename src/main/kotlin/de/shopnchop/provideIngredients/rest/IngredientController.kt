@@ -33,7 +33,7 @@ class IngredientController(
 
     }
 
-    @PostMapping("/ingredient/{name}")
+    @PostMapping("/ingredient")
     fun createIngredient(@RequestBody dto: IngredientDTO) {
         val ingredient = ingredientDtoConverter.dtoToDomain(dto)
         ingredientProcess.saveIngredient(ingredient)
