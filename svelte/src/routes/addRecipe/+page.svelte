@@ -54,7 +54,7 @@
 
 
 <div class="frame">
-    <header>
+    <header class="add-recipe-header">
         <button onclick={() => {navigate("/recipes")}}>Go Back</button>
     </header>
     <div class="main-add-recipe-wrapper">

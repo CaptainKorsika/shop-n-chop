@@ -9,7 +9,7 @@
 
 
 
-<header>
+<header class="main-header">
     <div class="button-section">
         <div class="recipe-section">
             <button class="show-recipes" on:click={() => {navigate("recipes")}}>Manage Recipes</button>

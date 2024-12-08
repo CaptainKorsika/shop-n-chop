@@ -55,6 +55,10 @@ h2{
     justify-content: space-around;
 }
 
+.back-button{
+
+}
+
 .ingredient-list-item > input {
     height: 20px;
     margin: auto 5px;
@@ -63,4 +67,8 @@ h2{
 .ingredient-confirm-button{
     width: 35px;
     height: 35px;
+}
+
+.add-recipe-header{
+    justify-content: end;
 }

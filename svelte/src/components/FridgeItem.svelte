@@ -3,11 +3,12 @@
 
     export let grocery;
     export let deleteGrocery;
+    export let updateGroceries;
 
     let isEditable = false
 
 
-    function confirmEdit() {
+    async function confirmEdit() {
         const amount = document.getElementById("fridgeitem-amount").value
         const date = document.getElementById("fridgeitem-date").value
 
@@ -21,7 +22,7 @@
         }
 
 
-        fetch('http://localhost:8080/shopnchop/changeGrocery', {
+        await fetch('http://localhost:8080/shopnchop/changeGrocery', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -33,6 +34,10 @@
         grocery.currentExpirationDate = date
 
         isEditable = false;
+
+
+        await updateGroceries()
+
 
     }
 
@@ -50,7 +55,7 @@
         <input id="fridgeitem-date" type="text" value={grocery.currentExpirationDate}>
         <div>
             <button class="grocery-edit-button" onclick={() => {isEditable = !isEditable}}>Cancel</button>
-            <button class="grocery-edit-button" onclick={confirmEdit}>Confirm</button>
+             <button class="grocery-edit-button" onclick={confirmEdit}>Confirm</button>
         </div>
     </li>
 {:else}

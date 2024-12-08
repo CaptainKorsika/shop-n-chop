@@ -64,7 +64,7 @@
 
 
 <div class="form-wrapper">
-    <form>
+    <form class="main-form">
         <div class="recipe-selection-wrapper">
             <label for={props.day}>{props.day}:</label>
             {#if props.data}

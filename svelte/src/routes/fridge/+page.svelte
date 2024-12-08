@@ -13,15 +13,22 @@
     let onlyExpired = false
 
     onMount(async () => {
-        const groceriesResponse = await fetch("http://localhost:8080/shopnchop/groceries")
-        allGroceries = await groceriesResponse.json()
-
-        await updateExpired()
-
+        await getGroceries()
+        await getExpired()
     })
 
     function navigate() {
         goto('/');
+    }
+
+    async function updateGroceries() {
+        await getGroceries()
+        await getExpired()
+    }
+
+    async function getGroceries() {
+        const groceriesResponse = await fetch("http://localhost:8080/shopnchop/groceries")
+        allGroceries = await groceriesResponse.json()
     }
 
     async function deleteGrocery(grocery) {
@@ -36,7 +43,7 @@
         });
 
         allGroceries = await response.json()
-        await updateExpired()
+        await getExpired()
     }
 
     async function deleteAllExpired(groceryList) {
@@ -49,10 +56,10 @@
         });
 
         allGroceries = await response.json()
-        await updateExpired()
+        await getExpired()
     }
 
-    async function updateExpired() {
+    async function getExpired() {
         const expiredResponse = await fetch("http://localhost:8080/shopnchop/expired")
         expiredGroceries = await expiredResponse.json()
     }
@@ -68,11 +75,19 @@
         <ul>
             {#if !onlyExpired}
                 {#each allGroceries as grocery}
-                    <FridgeItem grocery={grocery} deleteGrocery={deleteGrocery} />
+                    <FridgeItem
+                            grocery={grocery}
+                            deleteGrocery={deleteGrocery}
+                            updateGroceries={updateGroceries}
+                    />
                 {/each}
             {:else}
                 {#each expiredGroceries as grocery}
-                    <FridgeItem grocery={grocery} deleteGrocery={deleteGrocery} />
+                    <FridgeItem
+                            grocery={grocery}
+                            deleteGrocery={deleteGrocery}
+                            updateGroceries={updateGroceries}
+                    />
                 {/each}
             {/if}
         </ul>

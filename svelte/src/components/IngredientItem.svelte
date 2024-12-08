@@ -25,8 +25,6 @@
             durability: durability
         }
 
-        console.log(ingredientDTO)
-
         await fetch(`http://localhost:8080/shopnchop/ingredient`, {
             method: 'POST',
             headers: {
@@ -57,10 +55,10 @@
 {:else}
     <li>
         <div class="ingredient-item-wrapper">
-            <h4>{ingredient.name}</h4>
-            <h4>{ingredient.unit}</h4>
-            <h4>{ingredient.category}</h4>
-            <h4>{ingredient.durability}</h4>
+            <h4 class="long-heading">{ingredient.name}</h4>
+            <h4 class="short-heading">{ingredient.unit}</h4>
+            <h4 class="long-heading">{ingredient.category}</h4>
+            <h4 class="short-heading">{ingredient.durability}</h4>
         </div>
 
         <div class="item-buttons-wrapper">
