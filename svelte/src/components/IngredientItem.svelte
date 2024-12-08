@@ -25,7 +25,9 @@
             durability: durability
         }
 
-        await fetch(`http://localhost:8080/shopnchop/ingredient/${ingredient.name}`, {
+        console.log(ingredientDTO)
+
+        await fetch(`http://localhost:8080/shopnchop/ingredient`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

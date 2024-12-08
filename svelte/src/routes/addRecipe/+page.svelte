@@ -11,7 +11,7 @@
 
     function addIngredient() {
         let updateList = ingredients
-        updateList.push("test")
+        updateList.push({})
         ingredients = updateList
     }
 
@@ -21,6 +21,31 @@
 
     function createRecipe() {
 
+        const name = document.getElementById("recipe-name-input").value
+        const duration = document.getElementById("recipe-duration-input").value
+        const manual = document.getElementById("recipe-manual-input").value
+
+        if (name.length !== 0 && duration.length !== 0 && manual.length !== 0) {
+            const recipeDto = {
+                name: name,
+                duration: duration,
+                manual: manual,
+                ingredients: ingredients
+            }
+
+            try{
+                fetch(`http://localhost:8080/shopnchop/recipes`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(recipeDto)
+                });
+                goto("recipes")
+            } catch (e) {
+                console.log("Something went wrong")
+            }
+        }
     }
 
 
@@ -36,22 +61,22 @@
         <div class="recipe-input-area">
             <div class="recipe-input-wrapper">
                 <h2>Name</h2>
-                <input type="text">
+                <input id="recipe-name-input" type="text">
             </div>
             <div class="recipe-input-wrapper">
                 <h2>Duration</h2>
-                <input type="text">
+                <input id="recipe-duration-input" type="text">
             </div>
             <div class="recipe-input-wrapper">
                 <h2>Manual</h2>
-                <input type="text">
+                <input id="recipe-manual-input" type="text">
             </div>
         </div>
         <div class="ingredient-list">
             <h2>Ingredients</h2>
             <ul>
                 {#each ingredients as ingredient}
-                    <AddRecipeIngredient/>
+                    <AddRecipeIngredient bind:recipeIngredientDto={ingredient}/>
                 {/each}
             </ul>
             <button class="add-ingredient-button" onclick={addIngredient}>Add ingredient</button>
