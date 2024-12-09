@@ -9,6 +9,10 @@
     text-align: center;
 }
 
+.recipe-preview-wrapper:hover {
+    cursor: pointer;
+}
+
 .recipe-preview-wrapper > h2{
     height: 100%;
     padding: 30px;
